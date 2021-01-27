@@ -39,7 +39,7 @@ export default function Login() {
                 <Button block size="lg" className="loginButton" type="submit" disabled={!validateForm()}>
                     Login
         </Button>
-                <Button block size="lg" className="signUp" type="submit" disabled={!validateForm()}>
+                <Button block size="lg" className="sign" type="submit" disabled={!validateForm()}>
                     Sign Up!
         </Button>
             </Form>
