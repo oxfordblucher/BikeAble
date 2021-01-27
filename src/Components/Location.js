@@ -1,23 +1,42 @@
 import React, { useState } from 'react';
 
-function Location(props) {
+const Location = () => {
 
-    const [routeStart, setStart] = useState({})
     const [formObj, setFormObj] = useState({
         start: '',
         destination: ''
     })
 
-    
-
+    findRoute = () => {
+        this.setFormObj(
+            { start: }
+        )
+    }
 
     return (
-        <form className='mapping'>
-            <input
-                type='text'
-                placeholder='Search'
-                value={searchTerm}
-            />
-        </form>
+        <card className='createRoute'>
+            <h2 className='card-title'>Get a route!</h2>
+            <div className='card-body'>
+                <form className='mapForm'>
+                    <div className='form-group'>
+                        <input
+                            type='text'
+                            placeholder="Starting Location"
+                            value={routeStart}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input
+                            type='text'
+                            placeholder="Destination"
+                            value={destination}
+                        />
+                    </div>
+                    <button onClick={this.findRoute}>Map My Route!</button>
+                </form>
+            </div>
+        </card>
     )
 }
+
+export default Location;
