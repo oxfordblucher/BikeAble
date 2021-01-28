@@ -2,37 +2,39 @@ import React, { useState } from 'react';
 
 const Location = () => {
 
-    const [formObj, setFormObj] = useState({
-        start: '',
-        destination: ''
-    })
-
-    findRoute = () => {
-        this.setFormObj(
-            { start: }
-        )
+    const startLoc = useRef();
+    const destLoc = useRef();
+    
+    const handleSubmit = e => {
+        e.preventDefault();
+        dispatch({ type: LOADING });
+        ExtensionScriptApis.savePost({
+            
+        })
     }
 
     return (
         <card className='createRoute'>
             <h2 className='card-title'>Get a route!</h2>
             <div className='card-body'>
-                <form className='mapForm'>
+                <form className='mapForm' onSubmit={handleSubmit}>
                     <div className='form-group'>
                         <input
                             type='text'
                             placeholder="Starting Location"
-                            value={routeStart}
+                            required 
+                            ref={startLoc}
                         />
                     </div>
                     <div className='form-group'>
                         <input
                             type='text'
                             placeholder="Destination"
-                            value={destination}
+                            required 
+                            ref={destLoc}
                         />
                     </div>
-                    <button onClick={this.findRoute}>Map My Route!</button>
+                    <button className='btn btn-success mt-3 mb-5' type='submit'>Map My Route!</button>
                 </form>
             </div>
         </card>
