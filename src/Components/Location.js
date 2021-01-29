@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import hereAPI from '../Utils/hereAPI';
 
 const Location = () => {
 
-    const startLoc = useRef();
-    const destLoc = useRef();
+    const startRef = useRef();
+    const destRef = useRef();
     
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch({ type: LOADING });
-        ExtensionScriptApis.savePost({
-            
+        hereAPI.getRoute({
+            lat1: '',
+            long1: '',
+            lat2: '',
+            long2: 1
+        })
+        .then(result => {
+            console.log(result);
         })
     }
 
@@ -23,7 +29,7 @@ const Location = () => {
                             type='text'
                             placeholder="Starting Location"
                             required 
-                            ref={startLoc}
+                            ref={startRef}
                         />
                     </div>
                     <div className='form-group'>
@@ -31,7 +37,7 @@ const Location = () => {
                             type='text'
                             placeholder="Destination"
                             required 
-                            ref={destLoc}
+                            ref={destRef}
                         />
                     </div>
                     <button className='btn btn-success mt-3 mb-5' type='submit'>Map My Route!</button>
