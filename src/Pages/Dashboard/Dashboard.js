@@ -1,5 +1,5 @@
 import React from 'react';
-import Location from '../Location';
+import Location from '../../Location';
 
 function Dashboard() {
     return (
