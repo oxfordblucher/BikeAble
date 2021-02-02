@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+//import React, { useState } from 'react';
 
-const Location = () => {
+/* const Location = () => {
 
     const [formObj, setFormObj] = useState({
         start: '',
@@ -8,12 +8,12 @@ const Location = () => {
     })
 
     findRoute = () => {
-        this.setFormObj(
-            { start: }
+       this.setFormObj(
+            
         )
     }
 
-    return (
+     return (
         <card className='createRoute'>
             <h2 className='card-title'>Get a route!</h2>
             <div className='card-body'>
@@ -39,4 +39,4 @@ const Location = () => {
     )
 }
 
-export default Location;
+export default Location;  */

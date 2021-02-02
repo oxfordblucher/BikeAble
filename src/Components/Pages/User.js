@@ -1,12 +1,13 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import "./User.css";
+import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 
+export default function User() {
+                return(
+                    <React.Fragment>
+                
 
-<script> 
-    <body/>
 <h1>
   Welcome to BikeAble
   <small class="text-muted">insert username</small>
@@ -21,25 +22,28 @@ import "./User.css";
   <div/>
 <div/>
 
-<div class="form-check"/>
+<div class="Road-bike"/>
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked/>
   <label class="form-check-label" for="exampleRadios1">
     Road Bike
   </label>
 <div/>
-<div class="form-check"/>
+<div class="Gravel-Bike"/>
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"/>
   <label class="form-check-label" for="exampleRadios2">
     Gravel Bike
   </label>
 <div/>
-<div class="form-check"/>
+<div class="Mountain-Bike"/>
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"/>
   <label class="form-check-label" for="exampleRadios3">
     Mountain Bike
   </label>
 <div/>
-<button type="button" class="btn btn-primary">Enter Setup</button>
+<button type="setupButton" class="btn btn-primary">Enter Setup</button>
 
-<body/>
-</script>
+
+</React.Fragment>
+                
+)}
+
