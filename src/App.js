@@ -6,22 +6,19 @@ import Dashboard from './Pages/Dashboard';
 import Discover from './Pages/Discover';
 import Nav from './Components/Nav';
 import NoMatch from './Pages/NoMatch';
-/* import { StoreProvider } from './Utils/GlobalState'; */
 
 function App() {
   return (
     <Router>
       <div>
-        {/* <StoreProvider> */}
-          <Nav />
-          <Switch>
-            <Route exact path='/' component={Login} />
-            <Route exact path='/dashboard' component={Dashboard} />
-            {/* <Route exact path='/user/:id' component={User} /> */}
-            <Route exact path='/discover' component={Discover} />
-            <Route component={NoMatch} />
-          </Switch>
-        {/* </StoreProvider> */}
+        <Nav />
+        <Switch>
+          <Route exact path='/' component={Login} />
+          <Route exact path='/dashboard' component={Dashboard} />
+          {/* <Route exact path='/user/:id' component={User} /> */}
+          <Route exact path='/discover' component={Discover} />
+          <Route component={NoMatch} />
+        </Switch>
       </div>
     </Router>
   );

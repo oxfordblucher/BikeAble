@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const userAPI = () => {
     const getAllUsers = () => {
-        return axios.get('/api')
+        return axios.get('/api/users')
     }
 };
 
