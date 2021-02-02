@@ -1,88 +1,50 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import './Login.css';
 
-import React, { Component } from "react";
-import axios from "axios";
+class Create extends Component {
 
-export default class Registration extends Component {
-    constructor(props) {
-        super(props);
-
+    constructor() {
+        super();
         this.state = {
-            email: "",
-            password: "",
-            password_confirmation: "",
-            registrationErrors: ""
+            username: '',
+            password: ''
         };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+    }
+    onChange = (e) => {
+        const state = this.state
+        state[e.target.name] = e.target.value;
+        this.setState(state);
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    }
+    onSubmit = (e) => {
+        e.preventDefault();
 
-    handleSubmit(event) {
-        const { email, password, password_confirmation } = this.state;
+        const { username, password } = this.state;
 
-        axios
-            .post(
-                "http://localhost:3001/registrations",
-                {
-                    user: {
-                        email: email,
-                        password: password,
-                        password_confirmation: password_confirmation
-                    }
-                },
-                { withCredentials: true }
-            )
-            .then(response => {
-                if (response.data.status === "created") {
-                    this.props.handleSuccessfulAuth(response.data);
-                }
-            })
-            .catch(error => {
-                console.log("registration error", error);
+        axios.post('/api/auth/register', { username, password })
+            .then((result) => {
+                this.props.history.push("/login")
             });
-        event.preventDefault();
     }
 
     render() {
+        const { username, password } = this.state;
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={this.state.email}
-                        onChange={this.handleChange}
-                        required
-                    />
-
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        required
-                    />
-
-                    <input
-                        type="password"
-                        name="password_confirmation"
-                        placeholder="Password confirmation"
-                        value={this.state.password_confirmation}
-                        onChange={this.handleChange}
-                        required
-                    />
-
-                    <button type="submit">Register</button>
+            <div class="container">
+                <form class="form-signin" onSubmit={this.onSubmit}>
+                    <h2 class="form-signin-heading">Register</h2>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" class="form-control" placeholder="Email address" name="username" value={username} onChange={this.onChange} required />
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" name="password" value={password} onChange={this.onChange} required />
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
                 </form>
             </div>
         );
     }
 }
+
+export default Create;
