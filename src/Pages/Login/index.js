@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dashboard from "../Dashboard/Dashboard"
+import Dashboard from "../Dashboard"
 import "./Login.css";
 
 const passport = require("passport");
@@ -68,3 +68,5 @@ class Login extends Component {
         );
     }
 }
+
+export default Login;
