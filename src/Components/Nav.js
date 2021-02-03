@@ -6,9 +6,9 @@ function Nav() {
             <a className='navbar-brand' href='/'>
                 BikeAble
             </a>
-            <ul className='navbar-nav mr-auto'>
+            <ul className='navbar-nav ml-auto'>
                 <li className='nav-item'>
-                    <a className='nav-link' href='/dashboard'>Home</a>
+                    <a className='nav-link' href='/dashboard'>Dashboard</a>
                 </li>
                 <li className='nav-item'>
                     <a className='nav-link' href='/discover'>Discover</a>
