@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Card from 'react-bootstrap/Card';
 
 const LocationForm = (props) => {
 
@@ -8,34 +10,32 @@ const LocationForm = (props) => {
 
 
     return (
-        <div className='createRoute card'>
-            <h2 className='card-title'>Get a route!</h2>
-            <div className='card-body'>
-                <form className='mapForm'>
-                    <div className='form-group justify-content-start'>
-                        <input
+        <Card className='getRoute'>
+            <Card.Title>Get a route!</Card.Title>
+            <Card.Text>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className='justify-content-start'>
+                        <Form.Control
                             type='text'
                             placeholder="Starting Location"
                             required
                             value={start}
                             onChange={e => setStart(e.target.value)}
-                            className='form-control'
                         />
-                    </div>
-                    <div className='form-group justify-content-start'>
-                        <input
+                    </Form.Group>
+                    <Form.Group className='justify-content-start'>
+                        <Form.Control
                             type='text'
                             placeholder="Destination"
                             required
                             value={end}
                             onChange={e => setEnd(e.target.value)}
-                            className='form-control'
                         />
-                    </div>
-                    <button className='btn btn-success mt-3 mb-3' type='submit'>Map My Route!</button>
-                </form>
-            </div>
-        </div>
+                    </Form.Group>
+                    <Button block size='lg' type='submit'>Map My Route!</Button>
+                </Form>
+            </Card.Text>
+        </Card>
     )
 
 }

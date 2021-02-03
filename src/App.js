@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './Pages/Login/Login';
+import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
 /* import User from './Pages/User/User'; */
 import Discover from './Pages/Discover';
-import Nav from './Components/Nav';
+import Nav from './Components/Header';
 import NoMatch from './Pages/NoMatch';
 /* import { StoreProvider } from './Utils/GlobalState'; */
 
