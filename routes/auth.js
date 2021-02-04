@@ -28,11 +28,12 @@ router.post('/register', function (req, res) {
 
 // router for login
 router.post('/login', function (req, res) {
+    console.log(req.body)
     User.findOne({
         username: req.body.username
     }, function (err, user) {
         if (err) throw err;
-
+        console.log(user)
         if (!user) {
             res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
