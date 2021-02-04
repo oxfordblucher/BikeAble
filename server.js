@@ -1,23 +1,14 @@
 const express = require("express");
 const path = require('path');
 const mongoose = require("mongoose");
-const favicon = require('serve-favicon');
-const logger = require('morgan');
 const bodyParser = require('body-parser');
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-
-var book = require('./routes/books');
-var app = express();
-
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 'extended': 'false' }));
 app.use(express.static(path.join(__dirname, 'build')));
-
-app.use('/api/book', book);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -28,6 +19,8 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

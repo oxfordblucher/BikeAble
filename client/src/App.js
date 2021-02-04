@@ -18,7 +18,7 @@ function App() {
           <Route exact path='/' component={Login} />
           <Route exact path='/dashboard' component={Dashboard} />
           {/* <Route exact path='/user/:id' component={User} /> */}
-          {/* <Route exact path='/discover' component={Discover} /> */}
+          <Route exact path='/discover' component={Discover} />
           <Route component={NoMatch} />
         </Switch>
         {/* </StoreProvider> */}
