@@ -1,7 +1,7 @@
 import React, { useState, Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Dashboard from "../Dashboard"
+import { API } from "../../Utils/userAPI";
 import "./Login.css";
 
 const Login = (props) => {
@@ -10,6 +10,10 @@ const Login = (props) => {
     const [password, setPassword] = useState('')
 
     const handleSubmit = (e) => {
+        API.loginUser(email, password).then(res => {
+            // This is whre I redirect
+            alert(JSON.stringify(res))
+        })
         e.preventDefault();
     }
 

@@ -32,7 +32,7 @@ router.post('/login', function (req, res) {
         username: req.body.username
     }, function (err, user) {
         if (err) throw err;
-
+        console.log(user)
         if (!user) {
             res.status(401).send({ success: false, msg: 'Authentication failed. User not found.' });
         } else {
