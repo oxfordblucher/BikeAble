@@ -14,7 +14,7 @@ const Login = (props) => {
         e.preventDefault();
         API.loginUser(email, password).then(res => {
             // This is whre I redirect
-            if (res.data.success) {
+            if (res.data.success === ('true')) {
                 history.push('/dashboard')
             }
         })
