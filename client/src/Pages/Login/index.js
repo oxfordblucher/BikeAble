@@ -3,18 +3,21 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
 import "./Login.css";
+import { useHistory, } from "react-router-dom";
 
 const Login = (props) => {
-
+    let history = useHistory();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         API.loginUser(email, password).then(res => {
             // This is whre I redirect
-            alert(JSON.stringify(res))
+            if (res.data.success === ('true')) {
+                history.push('/dashboard')
+            }
         })
-        e.preventDefault();
     }
 
     // const redirectToReferrer = this.state.redirectToReferrer;
@@ -27,7 +30,7 @@ const Login = (props) => {
         <div className="Login">
             <h1>Welcome to Bikeable!</h1>
             <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" className="email" controlId="email">
+                <Form.Group size="lg" className="email" controlId="email" >
                     <Form.Label>Email</Form.Label>
                     <Form.Control
                         autoFocus
