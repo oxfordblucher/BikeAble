@@ -2,9 +2,9 @@ import React, { useState, Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
-import "./";
+import "./user.css";
 
-const user = (props) => {
+const User = (props) => {
 
     const [bikeFrame, setFrame] = useState('')
     const [bikeType, setType] = useState('')
@@ -15,6 +15,8 @@ const user = (props) => {
         })
         e.preventDefault();
     }
+
+    
 
 
 
@@ -51,7 +53,7 @@ const user = (props) => {
 }
 
 
-export default Equipment;
+export default User;
 
 
 
