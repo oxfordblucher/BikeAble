@@ -52,4 +52,22 @@ router.post('/login', function (req, res) {
     });
 });
 
+
+
+
+//Router for User
+router.post('/bike', (req, res) => {
+    Bike.create({
+      bikeFrame: req.body.bikeFrame,
+      bikeType: req.body.bikeType,
+    }).then((dbPost) => res.json(dbPost));
+  });
+
+
+
+
+
+
+
+
 module.exports = router;
