@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './Pages/Login/Login';
+import Login from './Pages/Login/index';
 import Dashboard from './Pages/Dashboard';
 /* import User from './Pages/User/User'; */
 import Discover from './Pages/Discover';
@@ -18,7 +18,7 @@ function App() {
           <Route exact path='/' component={Login} />
           <Route exact path='/dashboard' component={Dashboard} />
           {/* <Route exact path='/user/:id' component={User} /> */}
-          {/* <Route exact path='/discover' component={Discover} /> */}
+          <Route exact path='/discover' component={Discover} />
           <Route component={NoMatch} />
         </Switch>
         {/* </StoreProvider> */}
