@@ -52,7 +52,6 @@ router.post('/login', function (req, res) {
     });
 });
 
-<<<<<<< HEAD
 
 
 
@@ -71,6 +70,4 @@ router.post('/bike', (req, res) => {
 
 
 
-=======
->>>>>>> master
 module.exports = router;

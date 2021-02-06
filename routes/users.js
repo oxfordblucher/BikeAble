@@ -2,18 +2,14 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/User');
-<<<<<<< HEAD
-const Bike = require('../models/Bike');
+const Bike = require('../src/Components/models/Bike');
 
-=======
->>>>>>> master
 
 router.get('/', function (req, res, next) {
     User.find((err, users) => {
         if (err) return next(err);
         res.json(users);
     });
-<<<<<<< HEAD
 
 });
 
@@ -42,6 +38,3 @@ router.post('/bike', function (req, res, next) {
     module.exports = router;
 
   
-=======
-});
->>>>>>> master
