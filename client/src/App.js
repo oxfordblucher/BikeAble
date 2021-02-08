@@ -1,13 +1,13 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Login from './Pages/Login/index';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
 import Dashboard from './Pages/Dashboard';
 /* import User from './Pages/User/User'; */
 import Discover from './Pages/Discover';
-import register from './Pages/Login/Registration'
 import Nav from './Components/Nav';
 import NoMatch from './Pages/NoMatch';
-import Register from './Pages/Login/Registration';
+
 /* import { StoreProvider } from './Utils/GlobalState'; */
 
 function App() {
@@ -19,7 +19,6 @@ function App() {
         <Switch>
           <Route exact path='/' component={Login} />
           <Route exact path='/dashboard' component={Dashboard} />
-          {/* <Route exact path='/register' component={register} /> */}
           {/* <Route exact path='/user/:id' component={User} /> */}
           <Route exact path='/discover' component={Discover} />
           <Route exact path='/register' component={Register} />

@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 class LocationForm extends Component {
     constructor(props) {
@@ -39,7 +39,7 @@ class LocationForm extends Component {
                 'limit': 3
             },
             'headers': {
-                'crossorigin':true
+                'crossorigin': true
             }
         }).then(res => {
             const address = res.data.items[0].address;

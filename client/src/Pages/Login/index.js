@@ -1,9 +1,9 @@
-import React, { useState, Component } from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
 import "./Login.css";
-import { useHistory, } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Login = (props) => {
     let history = useHistory();
@@ -13,10 +13,14 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         API.loginUser(email, password).then(res => {
+            console.log(res.data.success)
             // This is whre I redirect
-            if (res.data.success) {
-                history.push('/dashboard')
-            }
+            // if (res.data.success) {
+            //     history.push('/dashboard')
+            // }
+            // else {
+            //     alert("Incorrect Credentials")
+            // }
         })
     }
 
@@ -51,10 +55,16 @@ const Login = (props) => {
                 <Button block size="lg" className="loginButton" type="submit">
                     Login
         </Button>
-                <h5>Not registered yet?! Sign up now!</h5>
-                <Button block size="lg" className="sign" type="submit">
-                    Sign Up!
-        </Button>
+                <p>
+                    Not a member?{" "}
+                    <Link to="/register">
+                        <span
+                            className="glyphicon glyphicon-plus-sign"
+                            aria-hidden="true"
+                        ></span>{" "}
+            Register here
+          </Link>
+                </p>
             </Form>
         </div>
     );
