@@ -29,6 +29,7 @@ const Login = (props) => {
     return (
         <div className="Login">
             <h1>Welcome to Bikeable!</h1>
+            <h3>Discover your route!</h3>
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" className="email" controlId="email" >
                     <Form.Label>Email</Form.Label>
@@ -50,6 +51,7 @@ const Login = (props) => {
                 <Button block size="lg" className="loginButton" type="submit">
                     Login
         </Button>
+                <h5>Not registered yet?! Sign up now!</h5>
                 <Button block size="lg" className="sign" type="submit">
                     Sign Up!
         </Button>
