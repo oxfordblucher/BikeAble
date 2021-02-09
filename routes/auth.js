@@ -14,12 +14,15 @@ router.post('/register', function (req, res) {
         res.json({ success: false, msg: 'Please pass username and password.' });
     } else {
         var newUser = new User({
+            firstName: req.body.firstName,
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            zipCode: req.body.zipCode
         });
         // save the user
         newUser.save(function (err) {
             if (err) {
+                console.log(err)
                 return res.json({ success: false, msg: 'Username already exists.' });
             }
             res.json({ success: true, msg: 'Successful created new user.' });

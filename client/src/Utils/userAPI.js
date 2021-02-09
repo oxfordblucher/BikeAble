@@ -4,8 +4,8 @@ export const API = {
     getAllUsers: () => {
         return axios.get('/api/users')
     },
-    registerUser: (user_name, password) => {
-        return axios.post('/auth/register', { username: user_name, password: password })
+    registerUser: (firstName, user_name, password, zipCode) => {
+        return axios.post('/auth/register', { firstName: firstName, username: user_name, password: password, zipCode: zipCode })
     },
     loginUser: (username, password) => {
         return axios.post("/auth/login", { username: username, password: password })

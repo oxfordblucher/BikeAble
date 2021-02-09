@@ -68,7 +68,7 @@ const Map = (props) => {
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
 
-    const ui = H.ui.UI.createDefault(hMap, defaultLayers);
+    // const ui = H.ui.UI.createDefault(hMap, defaultLayers);
 
     // This will act as a cleanup to run once this hook runs again.
     // This includes when the component un-mounts

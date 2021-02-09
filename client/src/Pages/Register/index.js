@@ -3,24 +3,22 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
 import "./Login.css";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, } from "react-router-dom";
 
-const Login = (props) => {
+const Register = (props) => {
     let history = useHistory();
+    const [firstName, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [zipCode, setZipCode] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        API.loginUser(email, password).then(res => {
-            console.log(res.data.success)
+        API.registerUser(firstName, email, password, zipCode).then(res => {
             // This is whre I redirect
-            // if (res.data.success) {
-            //     history.push('/dashboard')
-            // }
-            // else {
-            //     alert("Incorrect Credentials")
-            // }
+            if (res.data.success) {
+                history.push('/')
+            }
         })
     }
 
@@ -32,9 +30,17 @@ const Login = (props) => {
 
     return (
         <div className="Login">
-            <h1>Welcome to Bikeable!</h1>
-            <h3>Discover your route!</h3>
+            <h1>Register for Bikeable!</h1>
             <Form onSubmit={handleSubmit}>
+                <Form.Group size="lg" className="email" controlId="firstName" >
+                    <Form.Label>First Name</Form.Label>
+                    <Form.Control
+                        autoFocus
+                        type="firstName"
+                        value={firstName}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </Form.Group>
                 <Form.Group size="lg" className="email" controlId="email" >
                     <Form.Label>Email</Form.Label>
                     <Form.Control
@@ -52,23 +58,21 @@ const Login = (props) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
-                <Button block size="lg" className="loginButton" type="submit">
-                    Login
+                <Form.Group size="lg" className="password" controlId="zipCode">
+                    <Form.Label>Zip Code</Form.Label>
+                    <Form.Control
+                        type="zipCode"
+                        value={zipCode}
+                        onChange={(e) => setZipCode(e.target.value)}
+                    />
+                </Form.Group>
+                <Button block size="lg" className="sign" type="submit">
+                    Sign Up!
         </Button>
-                <p>
-                    Not a member?{" "}
-                    <Link to="/register">
-                        <span
-                            className="glyphicon glyphicon-plus-sign"
-                            aria-hidden="true"
-                        ></span>{" "}
-            Register here
-          </Link>
-                </p>
             </Form>
         </div>
     );
 }
 
 
-export default Login;
+export default Register;
