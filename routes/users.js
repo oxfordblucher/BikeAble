@@ -6,19 +6,35 @@ const Bike = require('../src/Components/models/Bike');
 
 
 router.get('/', function (req, res, next) {
-    User.find((err, users) => {
+    User.find((err, equipment) => {
         if (err) return next(err);
         res.json(users);
     });
 
 });
 
-router.post('/bike', function (req, res, next) {
-    var item = {
-        bikeFrame: req.body.bikeFrame,
-        bikeType: req.body.bikeType,
-    };
-});
+router.post('/bike', => {}
+    console.log,  'bike: ', req.body);
+    const data = req.body;
+
+    const equipment = new equipment(data);
+
+    
+    //.save
+    equipment.save((error) => {
+        if (error) {
+            res.status()
+        } else {
+            //equipment
+            res.json({
+                msg: 'Your equipment has been saved'
+            });
+        }
+        
+    });
+    
+    
+
 
 
     mongo.connect(url, function (err, db) {
