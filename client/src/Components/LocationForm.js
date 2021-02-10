@@ -17,7 +17,7 @@ class LocationForm extends Component {
             'coords1': {},
             'coords2': {},
             'suggestions': [],
-            'found': 'false'
+            'found': false
         }
     }
 
@@ -27,30 +27,23 @@ class LocationForm extends Component {
             [name]: value
         })
 
-        /* const res = await axios.get(`https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=${process.env.REACT_APP_hereApiKey}&query=${value}&beginHighlight=<b>&endHighlight=</b>`);
-        const locationid = res.data.suggestions[0].locationId;
-        const res2 = await axios.get(`https://geocoder.ls.hereapi.com/6.2/geocode.json?locationid=${locationid}&jsonattributes=1&gen=9&apiKey=${apiKey}`);
-        console.log(res2.data);
-        const coordinates = res2.data.response.view[0].result[0].location.displayPosition;
-        console.log(coordinates); */
-
-        axios.get(`/here/autocomplete/${value}`)
+        if (value.length > 5) {
+            axios.get(`/here/autocomplete/${value}`)
             .then(res => {
                 console.log(res);
-                /* const address = res2.data.items[0].address;
-                const coords = res2.data.response.view[0].result[0].location.displayPosition;
+                const coords = res.data.items[0].position;
 
                 switch (name) {
                     case 'start':
                         this.setState({
-                            'start': address,
+                            'start': res.data.items[0].title,
                             'coords1': coords
                         });
                         break;
 
                     case 'end':
                         this.setState({
-                            'end': address,
+                            'end': res.data.items[0].title,
                             'coords2': coords
                         });
                         break;
@@ -58,8 +51,9 @@ class LocationForm extends Component {
                     default:
                         console.log('Failed to get coordinates.');
                         break;
-                } */
+                }
             })
+        }
     }
 
 
@@ -121,7 +115,7 @@ class LocationForm extends Component {
                         </Form>
                     </Card.Body>
                 </Card>
-                {/* {renderMap()} */}
+                {renderMap()}
             </div >
         )
     }

@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 
 router.get('/autocomplete/:query', function (req, res) {
-    axios.get('https://autocomplete.search.hereapi.com/v1/autocomplete', {
+    axios.get('https://geocode.search.hereapi.com/v1/geocode', {
         'params': {
             'apiKey': process.env.REACT_APP_hereApiKey,
             'q': `${req.params.query}`,
@@ -11,7 +11,6 @@ router.get('/autocomplete/:query', function (req, res) {
         }
     })
     .then(resp => {
-        console.log(resp);
         res.json(resp.data);
     })
 })

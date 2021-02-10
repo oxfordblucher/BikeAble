@@ -1,30 +1,40 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Map = (props) => {
-  const centerLat = parseFloat((props.lat1 + props.lat2) / 2);
-  const centerLon = parseFloat((props.lon1 + props.lon2) / 2);
+class Map extends Component {
   // Create a reference to the HTML element we want to put the map on
-  const mapRef = React.useRef(null);
-  /**
-   * Create the map instance
-   * While `useEffect` could also be used here, `useLayoutEffect` will render
-   * the map sooner
-   */
-  React.useLayoutEffect(() => {
-    // `mapRef.current` will be `undefined` when this hook first runs; edge case that
-    if (!mapRef.current) return;
+  mapRef = React.createRef();
+
+  state = {
+    map: null
+  }
+  
+  componentDidMount = () => {
+
     const H = window.H;
     const platform = new H.service.Platform({
-      apikey: `${process.env.REACT_APP_hereApiKey}`
-    });
-    const defaultLayers = platform.createDefaultLayers();
-    const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-      center: { lat: centerLat, lng: centerLon },
-      zoom: 4,
-      pixelRatio: window.devicePixelRatio || 1
+        apikey: "HNUr88gYr5pMHAxGfu2rSzHK6R2okLg7Tymzq3dH-24"
     });
 
-    const onResult = (result) => {
+    const hidpi = ('devicePixelRatio' in window && devicePixelRatio > 1);
+
+    const defaultLayers = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+
+    // Create an instance of the map
+    const map = new H.Map(
+      this.mapRef.current,
+      defaultLayers.vector.normal.map,
+      {
+        center: { lat: parseFloat((this.props.lat1+this.props.lat2)/2), lng: parseFloat((this.props.lon1+this.props.lon2)/2) },
+        zoom: 12
+      }
+    );
+    
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+    const ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    this.setState({ map });
+    /* const onResult = (result) => {
       // ensure that at least one route was found
       if (result.routes.length) {
         result.routes[0].sections.forEach((section) => {
@@ -54,8 +64,8 @@ const Map = (props) => {
     const routingParams = {
       'routingMode': 'fast',
       'transportMode': 'bicycle',
-      'origin': `${props.lat1},${props.lon1}`,
-      'destination': `${props.lat2},${props.lon2}`,
+      'origin': `${this.props.lat1},${this.props.lon1}`,
+      'destination': `${this.props.lat2},${this.props.lon2}`,
       'return': 'polyline'
     };
 
@@ -64,20 +74,17 @@ const Map = (props) => {
     router.calculateRoute(routingParams, onResult,
       (error) => {
         alert(error.message);
-      });
+      }); */
 
-    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
+  }
 
-    // const ui = H.ui.UI.createDefault(hMap, defaultLayers);
+  componentWillUnmount = () => {
+    this.state.map.dispose();
+  }
 
-    // This will act as a cleanup to run once this hook runs again.
-    // This includes when the component un-mounts
-    return () => {
-      hMap.dispose();
-    };
-  }, [mapRef]); // This will run this hook every time this ref is updated
-
-  return <div className="map" ref={mapRef} style={{ height: "500px" }} />;
+  render() {
+    return <div className="map" ref={this.mapRef} style={{ height: "600px" }} />;
+  }
 }
 
-  export default Map;
+export default Map;
