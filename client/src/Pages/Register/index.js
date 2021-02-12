@@ -3,7 +3,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
 import "./Login.css";
-import { useHistory, } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import container from "react-bootstrap/Container";
+import Container from "react-bootstrap/Container";
 
 const Register = (props) => {
     let history = useHistory();
@@ -31,45 +33,56 @@ const Register = (props) => {
     return (
         <div className="Login">
             <h1>Register for Bikeable!</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" className="email" controlId="firstName" >
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="firstName"
-                        value={firstName}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" className="email" controlId="email" >
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        autoFocus
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" className="password" controlId="password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group size="lg" className="password" controlId="zipCode">
-                    <Form.Label>Zip Code</Form.Label>
-                    <Form.Control
-                        type="zipCode"
-                        value={zipCode}
-                        onChange={(e) => setZipCode(e.target.value)}
-                    />
-                </Form.Group>
-                <Button block size="lg" className="sign" type="submit">
-                    Sign Up!
+            <Container>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group size="lg" className="email" controlId="firstName" >
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                            autoFocus
+                            type="firstName"
+                            value={firstName}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group size="lg" className="email" controlId="email" >
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control
+                            autoFocus
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group size="lg" className="password" controlId="password">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Form.Group size="lg" className="password" controlId="zipCode">
+                        <Form.Label>Zip Code</Form.Label>
+                        <Form.Control
+                            type="zipCode"
+                            value={zipCode}
+                            onChange={(e) => setZipCode(e.target.value)}
+                        />
+                    </Form.Group>
+                    <Button block size="lg" className="sign" type="submit">
+                        Sign Up!
         </Button>
-            </Form>
+                    <p>
+                        Already a member?{" "}
+                        <Link to="/">
+                            <span
+                                className="glyphicon glyphicon-plus-sign"
+                                aria-hidden="true"
+                            ></span>{" "}
+            Login Here
+          </Link></p>
+                </Form>
+            </Container>
         </div>
     );
 }
