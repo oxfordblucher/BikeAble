@@ -1,11 +1,10 @@
-
 import React, { Component } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import Map from './Map';
+import {DebounceInput} from 'react-debounce-input';
 
 class LocationForm extends Component {
     constructor(props) {
@@ -23,9 +22,6 @@ class LocationForm extends Component {
 
     handleInputChange = event => {
         const { name, value } = event.target;
-        this.setState({
-            [name]: value
-        })
 
         if (value.length > 5) {
             axios.get(`/here/autocomplete/${value}`)
@@ -92,20 +88,22 @@ class LocationForm extends Component {
                     <Card.Body>
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Group className='justify-content-start'>
-                                <Form.Control
-                                    type='text'
-                                    placeholder="Starting Location"
-                                    required
-                                    name="start"
+                                <DebounceInput
+                                    className='input-group'
+                                    placeholder="Start"
+                                    minLength={5}
+                                    debounceTimeout={750}
                                     value={this.state.start}
+                                    name='start'
                                     onChange={this.handleInputChange}
                                 />
                             </Form.Group>
                             <Form.Group className='justify-content-start'>
-                                <Form.Control
-                                    type='text'
+                                <DebounceInput
+                                    className='input-group'
                                     placeholder="Destination"
-                                    required
+                                    minLength={5}
+                                    debounceTimeout={750}
                                     name="end"
                                     value={this.state.end}
                                     onChange={this.handleInputChange}
