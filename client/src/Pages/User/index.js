@@ -10,15 +10,18 @@ const User = (props) => {
     const [bikeType, setType] = useState('')
 
     const handleSubmit = (e) => {
+        e.preventDefault();
         API.Equipment(bikeFrame, bikeType,).then(res => {
             alert(JSON.stringify(res))
         })
-        e.preventDefault();
+        
     }
 
     
 
+    
 
+        
 
 
     return (

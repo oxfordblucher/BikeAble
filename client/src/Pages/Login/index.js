@@ -58,9 +58,8 @@ const Login = (props) => {
             <h3>Discover your route!</h3>
             {show &&
                 <Alert variant="info" onClose={() => setShow(false)} dismissible>
-                    <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
                     <p>
-                        Incorrect Credentials, please try logging in again or register to gain access to BikeAble.
+                        Incorrect Credentials, please try logging in again.
                 </p>
                 </Alert>}
             <Container>

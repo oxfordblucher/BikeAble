@@ -15,21 +15,8 @@ var BikeSchema = new Schema({
 });
 
 
-BikeSchema.post('save', function(doc, next) {
-    setTimeout(function() {
-      console.log('post1');
-      // Kick off the second post hook
-      next();
-    }, 10);
-  });
-  
-  // Will not execute until the first middleware calls `next()`
-  BikeSchema.post('save', function(doc, next) {
-    console.log('post2');
-    next();
-  });
 
-  module.exports = mongoose.model('Equipment', BikeSchema);
+  module.exports = mongoose.model('Bike', BikeSchema);
 
 
 
