@@ -16,7 +16,7 @@ var BikeSchema = new Schema({
 
 
 
-  module.exports = mongoose.model('Equipment', BikeSchema);
+  module.exports = mongoose.model('Bike', BikeSchema);
 
 
 
