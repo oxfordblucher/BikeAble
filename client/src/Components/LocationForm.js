@@ -27,20 +27,27 @@ class LocationForm extends Component {
             axios.get(`/here/autocomplete/${value}`)
             .then(res => {
                 console.log(res);
-                const coords = res.data.items[0].position;
+                const lat = res.data.items[0].position.lat;
+                const lng = res.data.items[0].position.lng;
 
                 switch (name) {
                     case 'start':
                         this.setState({
                             'start': res.data.items[0].title,
-                            'coords1': coords
+                            'coords1': {
+                                'lat': lat,
+                                'lng': lng
+                            }
                         });
                         break;
 
                     case 'end':
                         this.setState({
                             'end': res.data.items[0].title,
-                            'coords2': coords
+                            'coords2': {
+                                'lat': lat,
+                                'lng': lng
+                            }
                         });
                         break;
 
@@ -59,10 +66,10 @@ class LocationForm extends Component {
 
         this.setState({ 'found': true })
 
-        axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
+        /* axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
             .then(res => {
                 console.log(res.data);
-            })
+            }) */
     }
 
     render() {
