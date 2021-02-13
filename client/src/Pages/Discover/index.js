@@ -1,30 +1,51 @@
-import React, { Component } from 'react';
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import Form from "react-bootstrap/Form";
+import './Discover.css';
+import Button from 'react-bootstrap/Button';
+import Container from "react-bootstrap/Container";
+import React, { useState } from "react";
+import { API } from "../../Utils/userAPI";
+import { UsersList, UserListItem } from "./nearList"
 
-class Discover extends Component {
-    state = {
-        userList: []
-    };
+function Users() {
 
-    componentDidMount() {
-        axios.get('/api/users')
-            .then(data => {
-                console.log(data);
-            })
+    const [zipCode, setZipCodeSearch] = useState([]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        API.getZipUsers(setZipCodeSearch).then(res => {
+            console.log(res)
+
+        }).catch(error => console.log(error))
     }
 
-    render() {
-        return (
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Users</th>
-                    </tr>
-                </thead>
-            </Table>
-        )
-    }
-};
 
-export default Discover;
+    return (
+        <Table>
+            <h1>Users in Your Area!</h1>
+            <Container>
+                <Form>
+                    <Form.Control type="zipCode" className="zipCode" placeholder="Enter your Zip Code" />
+                    <Button
+                        onClick={handleSubmit}
+                        block size="lg" className="zipButton">
+                        Find Cyclers
+            </Button>
+                </Form>
+                {/* <UsersList>
+                    {this.state.Users.map(users => {
+                        return (
+                            <UserListItem
+                                name={users.firstName}
+                                zipCode={users.zipCode}
+                            />);
+                    })}
+                </UsersList> */}
+            </Container>
+
+        </Table>
+    );
+}
+
+
+export default Users;

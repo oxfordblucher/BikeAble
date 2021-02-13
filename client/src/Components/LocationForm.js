@@ -59,10 +59,10 @@ class LocationForm extends Component {
 
         this.setState({ 'found': true })
 
-        axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
+        /* axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
             .then(res => {
                 console.log(res.data);
-            })
+            }) */
     }
 
     render() {

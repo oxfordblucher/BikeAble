@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import bikeIcon from '../assets/riding-fill.png';
+import flagIcon from '../assets/racing-flag.png';
+import FormGroup from 'react-bootstrap/esm/FormGroup';
 
 class Map extends Component {
   // Create a reference to the HTML element we want to put the map on
@@ -15,9 +18,7 @@ class Map extends Component {
       apikey: "HNUr88gYr5pMHAxGfu2rSzHK6R2okLg7Tymzq3dH-24"
     });
 
-    const hidpi = ('devicePixelRatio' in window && devicePixelRatio > 1);
-
-    const defaultLayers = platform.createDefaultLayers(hidpi ? 512 : 256, hidpi ? 320 : null);
+    const defaultLayers = platform.createDefaultLayers();
 
     // Create an instance of the map
     const map = new H.Map(
@@ -25,9 +26,12 @@ class Map extends Component {
       defaultLayers.vector.normal.map,
       {
         center: { lat: parseFloat((this.props.lat1 + this.props.lat2) / 2), lng: parseFloat((this.props.lon1 + this.props.lon2) / 2) },
-        zoom: 12
+        zoom: 10,
+        pixelRatio: window.devicePixelRatio || 1
       }
     );
+
+    window.addEventListener('resize', () => map.getViewPort().resize());
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
@@ -43,16 +47,26 @@ class Map extends Component {
           // Create a linestring to use as a point source for the route line
           let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
 
+
+
+          let startIcon = new H.map.Icon(bikeIcon);
+
+          let endIcon = new H.map.Icon(flagIcon)
+
           // Create a polyline to display the route:
           let routeLine = new H.map.Polyline(linestring, {
             style: { strokeColor: 'blue', lineWidth: 3 }
           });
 
           // Create a marker for the start point:
-          let startMarker = new H.map.Marker(section.departure.place.location);
+          let startMarker = new H.map.Marker(section.departure.place.location, {
+            icon: startIcon
+          });
 
           // Create a marker for the end point:
-          let endMarker = new H.map.Marker(section.arrival.place.location);
+          let endMarker = new H.map.Marker(section.arrival.place.location, {
+            icon: endIcon
+          });
 
           // Add the route polyline and the two markers to the map:
           map.addObjects([routeLine, startMarker, endMarker]);
@@ -68,7 +82,7 @@ class Map extends Component {
       'transportMode': 'bicycle',
       'origin': `${this.props.lat1},${this.props.lon1}`,
       'destination': `${this.props.lat2},${this.props.lon2}`,
-      'return': 'polyline'
+      'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
     };
 
     const router = platform.getRoutingService(null, 8);

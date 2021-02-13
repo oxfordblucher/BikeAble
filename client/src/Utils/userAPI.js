@@ -11,8 +11,11 @@ export const API = {
         return axios.post("/auth/login", { username: username, password: password })
     },
     Equipment: (bikeFrame, bikeType) => {
-        console.log ("test") 
+        console.log("test")
         return axios.post("/api/bike", { bikeFrame: bikeFrame, bikeType: bikeType })
+    },
+    getZipUsers: (zipCode) => {
+        return axios.post('/api/users', { zipCode: zipCode })
     }
 
 };
