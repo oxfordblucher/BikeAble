@@ -1,6 +1,7 @@
 import React from 'react';
 import Location from '../../Components/LocationForm';
 
+
 function Dashboard() {
     return (
         <div className='container'>
