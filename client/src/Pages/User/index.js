@@ -8,10 +8,11 @@ const User = (props) => {
 
     const [bikeFrame, setFrame] = useState('')
     const [bikeType, setType] = useState('')
+    const [tireWidth, setWidth] = useState('')
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        API.Equipment(bikeFrame, bikeType,).then(res => {
+        API.Equipment(bikeFrame, bikeType, tireWidth,).then(res => {
             alert(JSON.stringify(res))
         })
         
@@ -43,6 +44,15 @@ const User = (props) => {
                         type="bikeType"
                         value={bikeType}
                         onChange={(e) => setType(e.target.value)}
+                    />
+                </Form.Group>
+                
+                <Form.Group size="lg" className="tireWidth" controlId="tireWidth">
+                    <Form.Label>Tire Width</Form.Label>
+                    <Form.Control
+                        type="tireWidth"
+                        value={tireWidth}
+                        onChange={(e) => setWidth(e.target.value)}
                     />
                 </Form.Group>
                 <Button block size="lg" className="submitButton" type="submit">
