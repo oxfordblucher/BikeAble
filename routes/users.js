@@ -19,23 +19,24 @@ router.post('/bike', function (req, res) {
     console.log(  'bike: ', req.body);
     const data = req.body;
 Bike.create (req.body).then (newBike => res.json(newBike))
-    //const equipment = new equipment(data);//
-
     
-    /*.save
-    equipment.save((error) => {
-        if (error) {
-            res.status()
-        } else {
-            //equipment
-            res.json({
-                msg: 'Your equipment has been saved'
-            });
-        }
-        
-    });*/
 });
+MongoClient.connect(url, (err,client) =>{
+    if (err) console.log(err);
     
+    const db = client.db('bike.DB');
+    
+    db.collection('/bike').find({ field:'Value' }).toArray((err, data) =>{
+     if (err) console.log(err)
+     else{
+      data.forEach(
+       (doc) => {
+        console.log(doc.name);
+        }
+      );
+      
+     }
+    });
 
 
 
