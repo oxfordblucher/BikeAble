@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import Map from './Map';
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from 'react-debounce-input';
 
 class LocationForm extends Component {
     constructor(props) {
@@ -51,11 +51,11 @@ class LocationForm extends Component {
                         });
                         break;
 
-                    default:
-                        console.log('Failed to get coordinates.');
-                        break;
-                }
-            })
+                        default:
+                            console.log('Failed to get coordinates.');
+                            break;
+                    }
+                })
         }
     }
 
