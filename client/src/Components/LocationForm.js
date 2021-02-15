@@ -25,24 +25,31 @@ class LocationForm extends Component {
 
         if (value.length > 5) {
             axios.get(`/here/autocomplete/${value}`)
-                .then(res => {
-                    console.log(res);
-                    const coords = res.data.items[0].position;
+            .then(res => {
+                console.log(res);
+                const lat = res.data.items[0].position.lat;
+                const lng = res.data.items[0].position.lng;
 
-                    switch (name) {
-                        case 'start':
-                            this.setState({
-                                'start': res.data.items[0].title,
-                                'coords1': coords
-                            });
-                            break;
+                switch (name) {
+                    case 'start':
+                        this.setState({
+                            'start': res.data.items[0].title,
+                            'coords1': {
+                                'lat': lat,
+                                'lng': lng
+                            }
+                        });
+                        break;
 
-                        case 'end':
-                            this.setState({
-                                'end': res.data.items[0].title,
-                                'coords2': coords
-                            });
-                            break;
+                    case 'end':
+                        this.setState({
+                            'end': res.data.items[0].title,
+                            'coords2': {
+                                'lat': lat,
+                                'lng': lng
+                            }
+                        });
+                        break;
 
                         default:
                             console.log('Failed to get coordinates.');
@@ -59,10 +66,10 @@ class LocationForm extends Component {
 
         this.setState({ 'found': true })
 
-        axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
+        /* axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
             .then(res => {
                 console.log(res.data);
-            })
+            }) */
     }
 
     render() {
