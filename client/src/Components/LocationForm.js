@@ -23,10 +23,11 @@ class LocationForm extends Component {
     handleInputChange = event => {
         const { name, value } = event.target;
 
+        this.setState({ 'found': false });
+
         if (value.length > 5) {
             axios.get(`/here/autocomplete/${value}`)
             .then(res => {
-                console.log(res);
                 const lat = res.data.items[0].position.lat;
                 const lng = res.data.items[0].position.lng;
 
@@ -62,14 +63,8 @@ class LocationForm extends Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        console.log(`Navigating from ${this.state.start} to ${this.state.end}`);
 
-        this.setState({ 'found': true })
-
-        /* axios.get(`/here/route/${this.state.coords1.lat}/${this.state.coords1.lng}/${this.state.coords2.lat}/${this.state.coords2.lng}`)
-            .then(res => {
-                console.log(res.data);
-            }) */
+        this.setState({ 'found': true });
     }
 
     render() {
@@ -99,7 +94,7 @@ class LocationForm extends Component {
                                     className='input-group'
                                     placeholder="Start"
                                     minLength={5}
-                                    debounceTimeout={750}
+                                    debounceTimeout={600}
                                     value={this.state.start}
                                     name='start'
                                     onChange={this.handleInputChange}
@@ -110,7 +105,7 @@ class LocationForm extends Component {
                                     className='input-group'
                                     placeholder="Destination"
                                     minLength={5}
-                                    debounceTimeout={750}
+                                    debounceTimeout={600}
                                     name="end"
                                     value={this.state.end}
                                     onChange={this.handleInputChange}
