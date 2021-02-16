@@ -14,8 +14,9 @@ class Bikewise extends Component {
         this.state = {
             zipcode: '19123',
             incidents: [],
-            recent: Math.floor(Date.now() / 1000) - 3888000
-
+            recent: Math.floor(Date.now() / 1000) - 31540000,
+            filteredIncidents: [],
+            filtered: 'year'
         }
     }
 
@@ -33,6 +34,26 @@ class Bikewise extends Component {
                     incidents: resp.data.incidents
                 })
             })
+    }
+
+    filter = (key) => {
+        let utc = 0;
+        switch (key) {
+            case 'week':
+                utc = Math.floor(Date.now() / 1000) - 604800;
+                break;
+            case 'month':
+                utc = Math.floor(Date.now() / 1000) - 2628000;
+                break;
+            default:
+                utc = Math.floor(Date.now() / 1000) - 31540000;
+                break;
+        }
+        let filtered = this.state.incidents.filter(incident => incident.occurred_at > utc);
+        this.setState({
+            filteredIncidents: filtered,
+            filtered: key
+        })
     }
 
     render() {
@@ -59,18 +80,11 @@ class Bikewise extends Component {
         return (
             <div className='mt-1'>
                 <h4>Incidents in your area</h4>
-                <ButtonGroup>
-                    <DropdownButton id="dateFilter" title="Date" size='sm'>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                    <DropdownButton id="dateFilter" title={`In the past ${this.state.filtered}`}>
+                        <Dropdown.Item onClick={()=>this.filter('week')}>Week</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>this.filter('month')}>Month</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>this.filter('year')}>Year</Dropdown.Item>
                     </DropdownButton>
-                    <DropdownButton id="radiusFilter" title="Radius" size='sm'>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                    </DropdownButton>
-                </ButtonGroup>
                 {incidentList}
             </div>
         )

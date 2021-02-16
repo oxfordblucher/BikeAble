@@ -4,7 +4,7 @@ import Bikewise from '../../Components/Bikewise';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Context from '../../Components/Context';
+import Contextual from '../../Components/Contextual';
 
 
 
@@ -12,14 +12,14 @@ function Dashboard() {
     return (
         <Container fluid>
             <Row>
-                <Col xs lg='2'>
+                <Col xs lg='3'>
                     <Bikewise />
                 </Col>
-                <Col xs lg='8'>
+                <Col xs lg='6'>
                     <Location />
                 </Col>
-                <Col xs lg='2'>
-                    <Context />
+                <Col xs lg='3'>
+                    <Contextual />
                 </Col>
             </Row>
         </Container>
