@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import bikeIcon from '../assets/riding-fill.png';
-import flagIcon from '../assets/racing-flag.png';
-import FormGroup from 'react-bootstrap/esm/FormGroup';
+import flagIcon from '../assets/flag.png';
+import Panel from './Panel';
 
 class Map extends Component {
   // Create a reference to the HTML element we want to put the map on
   mapRef = React.createRef();
+  panelRef = React.createRef();
 
   state = {
-    map: null
+    map: null,
+    label: '',
+    directions: [],
+    summary: {}
   }
 
   componentDidMount = () => {
@@ -31,6 +35,9 @@ class Map extends Component {
       }
     );
 
+    let startIcon = new H.map.Icon(bikeIcon);
+    let endIcon = new H.map.Icon(flagIcon);
+
     window.addEventListener('resize', () => map.getViewPort().resize());
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
@@ -39,68 +46,107 @@ class Map extends Component {
 
     this.setState({ map });
 
-
     const onResult = (result) => {
+      console.log(result.routes[0]);
       // ensure that at least one route was found
+      let startMarker, 
+        endMarker,
+        routeLine,
+        distance = 0, 
+        duration = 0, 
+        directions = [];
       if (result.routes.length) {
-        result.routes[0].sections.forEach((section) => {
+        for (let i=0;i<result.routes[0].sections.length;i++) {
+          let section = result.routes[0].sections[i];
           // Create a linestring to use as a point source for the route line
           let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
 
-
-
-          let startIcon = new H.map.Icon(bikeIcon);
-
-          let endIcon = new H.map.Icon(flagIcon)
-
           // Create a polyline to display the route:
-          let routeLine = new H.map.Polyline(linestring, {
+          routeLine = new H.map.Polyline(linestring, {
             style: { strokeColor: 'blue', lineWidth: 3 }
           });
 
+          distance += section.travelSummary.length;
+          duration += section.travelSummary.duration;
+
+          directions = directions.concat(section.actions);
+        };
+
+        let sections = result.routes[0].sections;
+        if (sections.length > 1) {
+          directions = directions.filter(action => action.action !== 'arrive');
+          directions.push(sections[sections.length - 1].action);
+        }
+
           // Create a marker for the start point:
-          let startMarker = new H.map.Marker(section.departure.place.location, {
-            icon: startIcon
-          });
-
-          // Create a marker for the end point:
-          let endMarker = new H.map.Marker(section.arrival.place.location, {
-            icon: endIcon
-          });
-
-          // Add the route polyline and the two markers to the map:
-          map.addObjects([routeLine, startMarker, endMarker]);
-
-          // Set the map's viewport to make the whole route visible:
-          map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
+        startMarker = new H.map.Marker(sections[0].departure.place.location, {
+          icon: startIcon
         });
-      }
-    };
 
-    const routingParams = {
-      'routingMode': 'fast',
-      'transportMode': 'bicycle',
-      'origin': `${this.props.lat1},${this.props.lon1}`,
-      'destination': `${this.props.lat2},${this.props.lon2}`,
-      'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
-    };
+        // Create a marker for the end point:
+        endMarker = new H.map.Marker(sections[sections.length - 1].arrival.place.location, {
+          icon: endIcon
+        });
 
-    const router = platform.getRoutingService(null, 8);
+        this.setState({
+          label: `Navigation Success!`,
+          directions: directions,
+          summary: {
+            distance: parseFloat(distance / 1609.34).toFixed(2),
+            duration: `${Math.floor(duration / 60)} minutes ${(duration % 60)} seconds`
+          }
+        });
 
-    router.calculateRoute(routingParams, onResult,
+        console.log(this.state.directions[0]);
+
+        // Add the route polyline and the two markers to the map:
+        map.addObjects([routeLine, startMarker, endMarker]);
+        map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
+    }
+  };
+
+  const routingParams = {
+    'routingMode': 'fast',
+    'transportMode': 'bicycle',
+    'origin': `${this.props.lat1},${this.props.lon1}`,
+    'destination': `${this.props.lat2},${this.props.lon2}`,
+    'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
+  };
+
+  const router = platform.getRoutingService(null, 8);
+
+  router.calculateRoute(routingParams, onResult,
       (error) => {
-        alert(error.message);
-      });
+  alert(error.message);
+});
 
   }
 
-  componentWillUnmount = () => {
-    this.state.map.dispose();
-  }
+componentWillUnmount = () => {
+  this.state.map.dispose();
+}
 
-  render() {
-    return <div className="map" ref={this.mapRef} style={{ height: "600px" }} />;
+render() {
+  const label = this.state.label;
+
+  const renderDirections = () => {
+    if (label) {
+      return <Panel
+        label={this.state.label}
+        directions={this.state.directions}
+        summary={this.state.summary}
+      />
+    } else {
+      return null;
+    }
   }
+  return (
+    <div>
+      <div className="map" ref={this.mapRef} style={{ height: "600px" }} />
+      {renderDirections()}
+    </div>
+  );
+}
 }
 
 export default Map;
