@@ -5,11 +5,11 @@ import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import Map from './Map';
 import { DebounceInput } from 'react-debounce-input';
+import CoordsContext from '../Utils/coords-context';
 
 class LocationForm extends Component {
-    constructor(props) {
-        super(props);
-
+    constructor() {
+        super();
         this.state = {
             'start': "",
             'end': "",
@@ -19,15 +19,15 @@ class LocationForm extends Component {
             'found': false
         }
     }
+    static contextType = CoordsContext;
 
     handleInputChange = event => {
         const { name, value } = event.target;
 
-        this.setState({ 'found': false });
-
         if (value.length > 5) {
             axios.get(`/here/autocomplete/${value}`)
                 .then(res => {
+                    console.log(res);
                     const lat = res.data.items[0].position.lat;
                     const lng = res.data.items[0].position.lng;
 
@@ -35,14 +35,20 @@ class LocationForm extends Component {
                         case 'start':
                             this.setState({
                                 'start': res.data.items[0].title,
-                                'coords1': coords
+                                'coords1': {
+                                    'lat': lat,
+                                    'lng': lng
+                                }
                             });
                             break;
 
                         case 'end':
                             this.setState({
                                 'end': res.data.items[0].title,
-                                'coords2': coords
+                                'coords2': {
+                                    'lat': lat,
+                                    'lng': lng
+                                }
                             });
                             break;
 
@@ -59,6 +65,8 @@ class LocationForm extends Component {
         event.preventDefault();
 
         this.setState({ 'found': true });
+
+        this.context.setCoords(this.state.coords1, this.state.coords2);
     }
 
     render() {
@@ -88,7 +96,7 @@ class LocationForm extends Component {
                                     className='input-group'
                                     placeholder="Start"
                                     minLength={5}
-                                    debounceTimeout={600}
+                                    debounceTimeout={700}
                                     value={this.state.start}
                                     name='start'
                                     onChange={this.handleInputChange}
@@ -99,7 +107,7 @@ class LocationForm extends Component {
                                     className='input-group'
                                     placeholder="Destination"
                                     minLength={5}
-                                    debounceTimeout={600}
+                                    debounceTimeout={700}
                                     name="end"
                                     value={this.state.end}
                                     onChange={this.handleInputChange}
@@ -110,7 +118,7 @@ class LocationForm extends Component {
                     </Card.Body>
                 </Card>
                 {renderMap()}
-            </div >
+            </div>
         )
     }
 }
