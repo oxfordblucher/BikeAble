@@ -5,7 +5,6 @@ import Card from 'react-bootstrap/Card';
 import CardImg from 'react-bootstrap/CardImg';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class Bikewise extends Component {
     constructor(props) {
