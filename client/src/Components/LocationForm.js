@@ -31,26 +31,20 @@ class LocationForm extends Component {
                 const lat = res.data.items[0].position.lat;
                 const lng = res.data.items[0].position.lng;
 
-                switch (name) {
-                    case 'start':
-                        this.setState({
-                            'start': res.data.items[0].title,
-                            'coords1': {
-                                'lat': lat,
-                                'lng': lng
-                            }
-                        });
-                        break;
+                    switch (name) {
+                        case 'start':
+                            this.setState({
+                                'start': res.data.items[0].title,
+                                'coords1': coords
+                            });
+                            break;
 
-                    case 'end':
-                        this.setState({
-                            'end': res.data.items[0].title,
-                            'coords2': {
-                                'lat': lat,
-                                'lng': lng
-                            }
-                        });
-                        break;
+                        case 'end':
+                            this.setState({
+                                'end': res.data.items[0].title,
+                                'coords2': coords
+                            });
+                            break;
 
                         default:
                             console.log('Failed to get coordinates.');
