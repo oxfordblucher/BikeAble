@@ -49,27 +49,18 @@ class Map extends Component {
     const onResult = (result) => {
       console.log(result.routes[0]);
       // ensure that at least one route was found
-      let startMarker, 
+      let startMarker,
         endMarker,
         routeLine,
-        distance = 0, 
-        duration = 0, 
+        distance = 0,
+        duration = 0,
         directions = [];
       if (result.routes.length) {
-        for (let i=0;i<result.routes[0].sections.length;i++) {
+        for (let i = 0; i < result.routes[0].sections.length; i++) {
           let section = result.routes[0].sections[i];
           // Create a linestring to use as a point source for the route line
           let linestring = H.geo.LineString.fromFlexiblePolyline(section.polyline);
 
-<<<<<<< HEAD
-
-
-          let startIcon = new H.map.Icon(bikeIcon);
-
-          let endIcon = new H.map.Icon(flagIcon)
-
-=======
->>>>>>> 70333ba12e865d1777feb8373e96c77e1c988d52
           // Create a polyline to display the route:
           routeLine = new H.map.Polyline(linestring, {
             style: { strokeColor: 'blue', lineWidth: 3 }
@@ -87,7 +78,7 @@ class Map extends Component {
           directions.push(sections[sections.length - 1].action);
         }
 
-          // Create a marker for the start point:
+        // Create a marker for the start point:
         startMarker = new H.map.Marker(sections[0].departure.place.location, {
           icon: startIcon
         });
@@ -111,51 +102,51 @@ class Map extends Component {
         // Add the route polyline and the two markers to the map:
         map.addObjects([routeLine, startMarker, endMarker]);
         map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
-    }
-  };
+      }
+    };
 
-  const routingParams = {
-    'routingMode': 'fast',
-    'transportMode': 'bicycle',
-    'origin': `${this.props.lat1},${this.props.lon1}`,
-    'destination': `${this.props.lat2},${this.props.lon2}`,
-    'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
-  };
+    const routingParams = {
+      'routingMode': 'fast',
+      'transportMode': 'bicycle',
+      'origin': `${this.props.lat1},${this.props.lon1}`,
+      'destination': `${this.props.lat2},${this.props.lon2}`,
+      'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
+    };
 
-  const router = platform.getRoutingService(null, 8);
+    const router = platform.getRoutingService(null, 8);
 
-  router.calculateRoute(routingParams, onResult,
+    router.calculateRoute(routingParams, onResult,
       (error) => {
-  alert(error.message);
-});
+        alert(error.message);
+      });
 
   }
 
-componentWillUnmount = () => {
-  this.state.map.dispose();
-}
+  componentWillUnmount = () => {
+    this.state.map.dispose();
+  }
 
-render() {
-  const label = this.state.label;
+  render() {
+    const label = this.state.label;
 
-  const renderDirections = () => {
-    if (label) {
-      return <Panel
-        label={this.state.label}
-        directions={this.state.directions}
-        summary={this.state.summary}
-      />
-    } else {
-      return null;
+    const renderDirections = () => {
+      if (label) {
+        return <Panel
+          label={this.state.label}
+          directions={this.state.directions}
+          summary={this.state.summary}
+        />
+      } else {
+        return null;
+      }
     }
+    return (
+      <div>
+        <div className="map" ref={this.mapRef} style={{ height: "600px" }} />
+        {renderDirections()}
+      </div>
+    );
   }
-  return (
-    <div>
-      <div className="map" ref={this.mapRef} style={{ height: "600px" }} />
-      {renderDirections()}
-    </div>
-  );
-}
 }
 
 export default Map;
