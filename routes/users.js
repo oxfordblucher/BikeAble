@@ -21,22 +21,9 @@ router.post('/bike', function (req, res) {
 Bike.create (req.body).then (newBike => res.json(newBike))
     
 });
-MongoClient.connect(url, (err,client) =>{
-    if (err) console.log(err);
-    
-    const db = client.db('bike.DB');
-    
-    db.collection('/bike').find({ field:'Value' }).toArray((err, data) =>{
-     if (err) console.log(err)
-     else{
-      data.forEach(
-       (doc) => {
-        console.log(doc.name);
-        }
-      );
+
+
       
-     }
-    });
 
 
 
@@ -46,4 +33,3 @@ MongoClient.connect(url, (err,client) =>{
 
     module.exports = router;
 
-  

@@ -9,16 +9,30 @@ const User = (props) => {
     const [bikeFrame, setFrame] = useState('')
     const [bikeType, setType] = useState('')
     const [tireWidth, setWidth] = useState('')
-
+    const [showTable, setShowTable] = useState(false)
+    const [data, setData] =useState({})
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        API.Equipment(bikeFrame, bikeType, tireWidth,).then(res => {
-            alert(JSON.stringify(res))
+        API.Equipment(bikeFrame, bikeType, tireWidth).then(() => {
+            console.log('Data has been sent to the server');
+
+            setData({bikeFrame, bikeType, tireWidth})
+            setShowTable(true)
+            resetUserInputs();
+            
         })
         
     }
+    const resetUserInputs = () => {
+        setFrame('')
+        setType('')
+        setWidth('')
+       
+      };
 
-    
+  
+          
 
     
 
@@ -58,12 +72,30 @@ const User = (props) => {
                 <Button block size="lg" className="submitButton" type="submit">
                     Submit
         </Button>
-                
+        {showTable && <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Frame</th>
+            <th scope="col">Type</th>
+            <th scope="col">Tires</th>
+          
+          </tr>
+          <tr>
+              <td scope="col">{data.bikeFrame}</td>
+              <td scope="col">{data.bikeType}</td>
+              <td scope="col">{data.tireWidth}</td>
+          </tr>
+        </thead>
+        </table>
+        }
+        
+      
+    
         
             </Form>
         </div>
     );
-}
+};
 
 
 export default User;
