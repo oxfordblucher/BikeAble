@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import Map from './Map';
-import {DebounceInput} from 'react-debounce-input';
+import { DebounceInput } from 'react-debounce-input';
 import CoordsContext from '../Utils/coords-context';
 
 class LocationForm extends Component {
@@ -26,37 +26,37 @@ class LocationForm extends Component {
 
         if (value.length > 5) {
             axios.get(`/here/autocomplete/${value}`)
-            .then(res => {
-                console.log(res);
-                const lat = res.data.items[0].position.lat;
-                const lng = res.data.items[0].position.lng;
+                .then(res => {
+                    console.log(res);
+                    const lat = res.data.items[0].position.lat;
+                    const lng = res.data.items[0].position.lng;
 
-                switch (name) {
-                    case 'start':
-                        this.setState({
-                            'start': res.data.items[0].title,
-                            'coords1': {
-                                'lat': lat,
-                                'lng': lng
-                            }
-                        });
-                        break;
+                    switch (name) {
+                        case 'start':
+                            this.setState({
+                                'start': res.data.items[0].title,
+                                'coords1': {
+                                    'lat': lat,
+                                    'lng': lng
+                                }
+                            });
+                            break;
 
-                    case 'end':
-                        this.setState({
-                            'end': res.data.items[0].title,
-                            'coords2': {
-                                'lat': lat,
-                                'lng': lng
-                            }
-                        });
-                        break;
+                        case 'end':
+                            this.setState({
+                                'end': res.data.items[0].title,
+                                'coords2': {
+                                    'lat': lat,
+                                    'lng': lng
+                                }
+                            });
+                            break;
 
-                    default:
-                        console.log('Failed to get coordinates.');
-                        break;
-                }
-            })
+                        default:
+                            console.log('Failed to get coordinates.');
+                            break;
+                    }
+                })
         }
     }
 
