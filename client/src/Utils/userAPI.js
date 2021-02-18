@@ -11,7 +11,7 @@ export const API = {
         return axios.post("/auth/login", { username: username, password: password })
     },
     Equipment: (bikeFrame, bikeType, tireWidth) => {
-        return axios.post("/auth/bike", { bikeFrame: bikeFrame, bikeType: bikeType, tireWidth: tireWidth })
+        return axios.post("/api/bike", { bikeFrame: bikeFrame, bikeType: bikeType, tireWidth: tireWidth })
     },
     getZipUsers: (zipCode) => {
         return axios.post('/api/users', { zipCode: zipCode })

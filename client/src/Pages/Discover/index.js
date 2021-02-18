@@ -28,13 +28,13 @@ function Users() {
     useEffect(() => {
         axios.get('/auth/user')
             .then(res => {
-                if(!res.data.name) {
+                if (!res.data.name) {
                     setRedirect(true)
                 }
             })
     });
 
-    if(redirect) {
+    if (redirect) {
         return <Redirect to='/' />
     }
 
