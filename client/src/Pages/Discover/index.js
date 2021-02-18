@@ -43,7 +43,7 @@ function Users() {
             <h1>Users in Your Area!</h1>
             <Container>
                 <Form>
-                    <Form.Control onChange={(e) => setZipCodeSearch(e.target.value)} type="text" className="zipCode" placeholder="Enter your Zip Code" />
+                <Form.Control onChange={(e) => setZipCodeSearch(e.target.value)} type="text" className="zipCode" placeholder="Enter your Zip Code" />
                     <Button
                         onClick={handleSubmit}
                         block size="lg" className="zipButton">
@@ -52,9 +52,11 @@ function Users() {
                 </Form>
                 {users.length ? users.map((user, index) => <div><ul>
                     <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
+                    
             </Container>
-
+           
         </Table>
+        
     );
 }
 
