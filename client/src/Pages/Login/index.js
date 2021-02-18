@@ -17,7 +17,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         API.loginUser(email, password).then(res => {
-            
+
             // This is whre I redirect
             if (res.data.success) {
                 history.push('/dashboard')
