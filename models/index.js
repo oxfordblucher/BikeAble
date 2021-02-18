@@ -1,4 +1,3 @@
 module.exports = {
-  Bike: require('./Bike'),
-  User: require('./User')
+  Bike: require("./Bike")
 };
