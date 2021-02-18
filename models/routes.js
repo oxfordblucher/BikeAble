@@ -13,7 +13,6 @@ var routeSchema = new Schema({
         lon: { type: Object },
         name: { type: String }
     },
-
     waypoint: {
         type: Array,
         required: true
