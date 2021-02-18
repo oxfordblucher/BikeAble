@@ -5,7 +5,7 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../models/User");
+var DB = require('../models');
 
 
 //router for signup
@@ -13,7 +13,7 @@ router.post('/register', function (req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({ success: false, msg: 'Please pass username and password.' });
     } else {
-        var newUser = new User({
+        var newUser = new DB.User({
             firstName: req.body.firstName,
             username: req.body.username,
             password: req.body.password,
@@ -33,7 +33,7 @@ router.post('/register', function (req, res) {
 // router for login
 router.post('/login',
     function (req, res) {
-        User.findOne({
+        DB.User.findOne({
             username: req.body.username
         }, function (err, user) {
             if (err) throw err;
@@ -56,6 +56,7 @@ router.post('/login',
                         res.cookie('bikeAble', token, {httpOnly: true});
                         res.json({ success: true, token: token });
                     } else {
+                        console.log('Authentication failed backend');
                         res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
                     }
                 });
@@ -80,38 +81,46 @@ router.get('/user/zipcode', passport.authenticate('jwt', { session: false }),
 
 router.get('/user/routes', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
-        res.send(req.user.routes);
+        DB.Route.find({user: req.user.id})
+            .then(data => {
+                res.json(data);
+            })
     })
 
-router.post('/user/routes', passport.authenticate('jwt', { session: false }),
+router.post('/user/route', passport.authenticate('jwt', { session: false }),
     function(req, res, next) {
-        User.findOne({
-            username: req.user.username
-        }, function (err, user) {
-            
+        const newRoute = new DB.Route({
+            start: {
+                lat: req.body.start.lat,
+                lon: req.body.start.lon,
+                name: req.body.start.name
+            },
+            end: {
+                lat: req.body.end.lat,
+                lon: req.body.end.lon,
+                name: req.body.end.name
+            },
+            waypoint: req.body.waypoint,
+            user: req.user._id
+        });
+        newRoute.save(function (err) {
+            if (err) {
+                console.log(err)
+                return res.json({ success: false })
+            }
+            res.json({sucess: true})
         })
-    })
+    });
 
 //Router for User
-router.post('/bike', (req, res) => {
-    Bike.create({
+router.post('/user/bike', (req, res) => {
+    DB.Bike.create({
         bikeFrame: req.body.bikeFrame,
         bikeType: req.body.bikeType,
+        tireWidth: req.body.tireWidth,
+        owner: req.user.id
     }).then((dbPost) => res.json(dbPost));
 });
-
-// Router for the bikeroutes
-router.post('/routes', (req, res) => {
-    route.create({
-        // start lat and lon
-        // finish lat and lon
-        // optional waypoint
-    }).then((dbPost) => res.json(dbPost));
-});
-
-
-
-
 
 
 
