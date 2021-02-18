@@ -1,0 +1,46 @@
+@media all and (min-width: 480px) {
+.user {
+      padding: 5px 0;
+    }
+  
+    .user form {
+      margin: 0 auto;
+      max-width: 300px;
+    }
+
+    .bikeFrame {
+ padding-bottom: 1%;
+text-align: center;
+    }
+    
+    .bikeType {
+        padding-bottom: 1%;
+       text-align: center;
+  }
+    .tireWidth {
+    padding-bottom: 1%;
+   text-align: center;
+  
+   
+
+ 
+}
+  .submitButton {
+      align-items: center;
+  }
+
+
+  
+}
+
+  
+.container {
+  background-color: rgb(127, 167, 127);
+  padding: 2%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+p {
+  text-align: center;
+  padding: 3%;
+}
