@@ -1,8 +1,14 @@
-import { createContext } from 'react';
+import React from 'react';
+import { Component } from 'react';
 
-export const AuthContext = createContext({
-    isLoggedIn: false,
-    token: null,
-    login: () => { },
-    logout: () => { }
-});
+class Context extends Component {
+    render() {
+        return (
+            <div>
+
+            </div>
+        )
+    }
+}
+
+export default Context;

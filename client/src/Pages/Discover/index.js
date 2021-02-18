@@ -19,7 +19,7 @@ function Users() {
         e.preventDefault();
         API.getZipUsers(zipCode).then(res => {
             console.log(res.data)
-            setUsers({ users: res.data })
+            setUsers(res.data)
             setZipCodeSearch("")
 
         }).catch(error => console.log(error))
@@ -50,7 +50,8 @@ function Users() {
                         Find Cyclers
             </Button>
                 </Form>
-                {users.length > 0 ? users.map((user, index) => <p>{JSON.stringify(user)}</p>) : "No users found"}
+                {users.length ? users.map((user, index) => <div><ul>
+                    <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
             </Container>
 
         </Table>

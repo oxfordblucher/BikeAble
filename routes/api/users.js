@@ -26,21 +26,7 @@ router.post('/bike', function (req, res) {
     console.log('bike: ', req.body);
     const data = req.body;
     Bike.create(req.body).then(newBike => res.json(newBike))
-    //const equipment = new equipment(data);//
 
-
-    /*.save
-    equipment.save((error) => {
-        if (error) {
-            res.status()
-        } else {
-            //equipment
-            res.json({
-                msg: 'Your equipment has been saved'
-            });
-        }
-        
-    });*/
 });
 
 
@@ -50,5 +36,5 @@ router.post('/bike', function (req, res) {
 
 
 
-module.exports = router;
+
 

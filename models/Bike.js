@@ -11,8 +11,13 @@ var BikeSchema = new Schema({
     bikeType: {
         type: String,
         required: true
+    },
+    tireWidth: {
+        type: String,
+        required: true
     }
 });
+
 
 
 
