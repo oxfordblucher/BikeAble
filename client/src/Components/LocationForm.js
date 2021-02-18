@@ -38,7 +38,8 @@ class LocationForm extends Component {
                             'coords1': {
                                 'lat': lat,
                                 'lng': lng
-                            }
+                            },
+                            'found': false
                         });
                         break;
 
@@ -48,7 +49,8 @@ class LocationForm extends Component {
                             'coords2': {
                                 'lat': lat,
                                 'lng': lng
-                            }
+                            },
+                            'found': false
                         });
                         break;
 

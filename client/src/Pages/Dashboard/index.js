@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Contextual from '../../Components/Contextual';
 import CoordsContext from '../../Utils/coords-context';
+import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 class Dashboard extends Component {
@@ -18,20 +20,47 @@ class Dashboard extends Component {
         })
     }
 
+    setWaypoint = (lat, lng) => {
+        this.setState({
+            waypoint: {
+                lat: lat,
+                lng: lng
+            }
+        })
+    }
+
     state = {
         coords1: {
-            lat: 0,
-            lng: 0
+            lat: NaN,
+            lng: NaN
         },
         coords2: {
-            lat: 0,
-            lng: 0
+            lat: NaN,
+            lng: NaN
         },
+        zipCode: NaN,
         found: false,
-        setCoords: this.setCoords
+        setCoords: this.setCoords,
+        setWaypoint: this.setWaypoint,
+        redirect: false
     };
 
+    componentDidMount = () => {
+        axios.get('/auth/user')
+            .then(res => {
+                console.log(res.data);
+                if(!res.data.name) {
+                    this.setState({
+                        redirect: true
+                    })
+                }
+            })
+    }
+
     render() {
+        if (this.state.redirect) {
+            return <Redirect to='/' />
+        }
         return (
             <Container fluid>
                 <Row>

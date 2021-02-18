@@ -5,12 +5,14 @@ class Panel extends Component {
         const directions = this.props.directions.map((direction, i) => {
             let length = parseInt(direction.length * 3.28084),
                 readLength;
-            if (length > 5280) {
-                readLength = `${parseFloat(length/5280).toFixed(2)} miles`
+            if (length === 0) {
+                readLength = ''
+            }else if (length > 5280) {
+                readLength = `Continue for ${parseFloat(length/5280).toFixed(2)} miles.`
             }else{
-                readLength = `${length} feet`
+                readLength = `Continue for ${length} feet.`
             }
-            let instruction = `${direction.instruction.split('Go')[0]} Continue for ${readLength}.`;
+            let instruction = `${direction.instruction.split('Go')[0]} ${readLength}`;
             return (
                 <li key={i}>
                     {instruction}

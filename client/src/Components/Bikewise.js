@@ -11,7 +11,7 @@ class Bikewise extends Component {
         super(props);
 
         this.state = {
-            zipcode: '19123',
+            zipcode: NaN,
             incidents: [],
             recent: Math.floor(Date.now() / 1000) - 31540000,
             filteredIncidents: [],
@@ -20,20 +20,26 @@ class Bikewise extends Component {
     }
 
     componentDidMount = () => {
-        axios.get('https://bikewise.org/api/v2/incidents', {
-            'params': {
-                'occurred_after': this.state.recent,
-                'proximity': this.state.zipcode,
-                'proximity_square': 20
-            }
-        })
-            .then(resp => {
-                console.log(resp.data);
-                this.setState({
-                    incidents: resp.data.incidents
-                })
+        axios.get(`/auth/user/zipcode`).then(res => {
+            console.log(res.data);
+                    
+            axios.get('https://bikewise.org/api/v2/incidents', {
+                'params': {
+                    'occurred_after': this.state.recent,
+                    'proximity': res.data.zipCode,
+                    'proximity_square': 20
+                }
             })
+                .then(resp => {
+                    console.log(resp.data);
+                    this.setState({
+                        incidents: resp.data.incidents,
+                        filteredIncidents: resp.data.incidents
+                    })
+                })
+        })
     }
+
 
     filter = (key) => {
         let utc = 0;
@@ -48,19 +54,19 @@ class Bikewise extends Component {
                 utc = Math.floor(Date.now() / 1000) - 31540000;
                 break;
         }
-        let filtered = this.state.incidents.filter(incident => incident.occurred_at > utc);
+        let filteredList = this.state.incidents.filter(incident => incident.occurred_at > utc);
         this.setState({
-            filteredIncidents: filtered,
+            filteredIncidents: filteredList,
             filtered: key
         })
     }
 
     render() {
-
-        const incidentList = this.state.incidents.map((incident, i) => {
+        const incidentList = this.state.filteredIncidents.map((incident, i) => {
             let time = new Date(incident.occurred_at * 1000);
             let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             let formattedtime = `${months[time.getMonth()]} ${time.getDate()} ${time.getFullYear()}`
+
             return (
                 <Card key={i}>
                     <Card.Header> {incident.type} </Card.Header>
@@ -79,11 +85,11 @@ class Bikewise extends Component {
         return (
             <div className='mt-1'>
                 <h4>Incidents in your area</h4>
-                    <DropdownButton id="dateFilter" title={`In the past ${this.state.filtered}`}>
-                        <Dropdown.Item onClick={()=>this.filter('week')}>Week</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>this.filter('month')}>Month</Dropdown.Item>
-                        <Dropdown.Item onClick={()=>this.filter('year')}>Year</Dropdown.Item>
-                    </DropdownButton>
+                <DropdownButton id="dateFilter" title={`In the past ${this.state.filtered}`}>
+                    <Dropdown.Item onClick={() => this.filter('week')}>Week</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.filter('month')}>Month</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.filter('year')}>Year</Dropdown.Item>
+                </DropdownButton>
                 {incidentList}
             </div>
         )
