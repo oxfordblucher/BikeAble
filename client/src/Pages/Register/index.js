@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import { API } from "../../Utils/userAPI";
 import "./Login.css";
 import { useHistory, Link } from "react-router-dom";
-import container from "react-bootstrap/Container";
 import Container from "react-bootstrap/Container";
 
 const Register = (props) => {
@@ -32,7 +31,7 @@ const Register = (props) => {
 
     return (
         <div className="Login">
-            <h1>Register for Bikeable!</h1>
+            <h1>Register for BikeAble!</h1>
             <Container>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group size="lg" className="email" controlId="firstName" >

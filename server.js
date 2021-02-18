@@ -7,11 +7,12 @@ const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 require('dotenv').config();
-
+const cookieParser = require('cookie-parser');
 
 app.use(logger('dev'));
+app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ 'extended': 'false' }));
+app.use(bodyParser.urlencoded({ 'extended': 'false' })); 
 app.use(express.static(path.join(__dirname, 'build')));
 
 // error handler
@@ -29,11 +30,6 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 app.use(routes);
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

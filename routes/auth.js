@@ -33,7 +33,6 @@ router.post('/register', function (req, res) {
 // router for login
 router.post('/login',
     function (req, res) {
-        console.log(req.body)
         User.findOne({
             username: req.body.username
         }, function (err, user) {
@@ -45,10 +44,17 @@ router.post('/login',
                 // check if password matches
                 user.comparePassword(req.body.password, function (err, isMatch) {
                     if (isMatch && !err) {
+                        var userInfo = {
+                            name: `${user.firstName}`,
+                            username: `${user.username}`,
+                            zipCode: `${user.zipCode}`
+                        }
                         // if user is found and password is right create a token
-                        var token = jwt.sign(user.toJSON(), settings.secret);
+                        var token = jwt.sign(userInfo, settings.secret,
+                        { expiresIn: '3h' });
                         // return the information including token as JSON
-                        res.json({ success: true, token: 'JWT ' + token });
+                        res.cookie('bikeAble', token, {httpOnly: true});
+                        res.json({ success: true, token: token });
                     } else {
                         res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
                     }
@@ -57,8 +63,34 @@ router.post('/login',
         });
     });
 
+router.get('/user', passport.authenticate('jwt', {failWithError: true, session: false}),
+    function(req, res, next) {
+        if (req.xhr) {res.json({name: req.user.firstName, zipCode: req.user.zipCode})};
+    },
+    function(err, req, res, next) {
+        if (req.xhr) {return res.json(err);}
+        return res.redirect('/');
+    }
+);
 
+router.get('/user/zipcode', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        res.send(req.user.zipCode);
+    })
 
+router.get('/user/routes', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        res.send(req.user.routes);
+    })
+
+router.post('/user/routes', passport.authenticate('jwt', { session: false }),
+    function(req, res, next) {
+        User.findOne({
+            username: req.user.username
+        }, function (err, user) {
+            
+        })
+    })
 
 //Router for User
 router.post('/bike', (req, res) => {
