@@ -11,12 +11,14 @@ import { Redirect } from 'react-router-dom';
 
 
 class Dashboard extends Component {
-    setCoords = (coords1, coords2) => {
+    setCoords = (coords1, coords2, start, end) => {
         console.log(coords1, coords2);
         this.setState({
             coords1: coords1,
             coords2: coords2,
-            found: true
+            found: true,
+            start: start,
+            end: end
         })
     }
 
@@ -29,6 +31,16 @@ class Dashboard extends Component {
         })
     }
 
+    setSummary = (dist, dura, directions) => {
+        this.setState({
+            summary: {
+                distance: dist,
+                duration: dura
+            },
+            directions: directions
+        })
+    }
+
     state = {
         coords1: {
             lat: NaN,
@@ -38,10 +50,19 @@ class Dashboard extends Component {
             lat: NaN,
             lng: NaN
         },
+        waypoint: {
+            lat: NaN,
+            lng: NaN
+        },
         zipCode: NaN,
         found: false,
+        summary: {
+            distance: NaN,
+            duration: ''
+        },
         setCoords: this.setCoords,
         setWaypoint: this.setWaypoint,
+        setSummary: this.setSummary,
         redirect: false
     };
 

@@ -5,7 +5,7 @@ require('../config/passport')(passport);
 var express = require('express');
 var jwt = require('jsonwebtoken');
 var router = express.Router();
-var User = require("../models/User");
+var DB = require('../models');
 
 
 //router for signup
@@ -13,7 +13,7 @@ router.post('/register', function (req, res) {
     if (!req.body.username || !req.body.password) {
         res.json({ success: false, msg: 'Please pass username and password.' });
     } else {
-        var newUser = new User({
+        var newUser = new DB.User({
             firstName: req.body.firstName,
             username: req.body.username,
             password: req.body.password,
@@ -33,7 +33,7 @@ router.post('/register', function (req, res) {
 // router for login
 router.post('/login',
     function (req, res) {
-        User.findOne({
+        DB.User.findOne({
             username: req.body.username
         }, function (err, user) {
             if (err) throw err;
@@ -51,11 +51,12 @@ router.post('/login',
                         }
                         // if user is found and password is right create a token
                         var token = jwt.sign(userInfo, settings.secret,
-                        { expiresIn: '3h' });
+                            { expiresIn: '3h' });
                         // return the information including token as JSON
-                        res.cookie('bikeAble', token, {httpOnly: true});
+                        res.cookie('bikeAble', token, { httpOnly: true });
                         res.json({ success: true, token: token });
                     } else {
+                        console.log('Authentication failed backend');
                         res.status(401).send({ success: false, msg: 'Authentication failed. Wrong password.' });
                     }
                 });
@@ -63,55 +64,80 @@ router.post('/login',
         });
     });
 
-router.get('/user', passport.authenticate('jwt', {failWithError: true, session: false}),
-    function(req, res, next) {
-        if (req.xhr) {res.json({name: req.user.firstName, zipCode: req.user.zipCode})};
+router.get('/user', passport.authenticate('jwt', { failWithError: true, session: false }),
+    function (req, res, next) {
+        if (req.xhr) { res.json({ name: req.user.firstName, zipCode: req.user.zipCode }) };
     },
-    function(err, req, res, next) {
-        if (req.xhr) {return res.json(err);}
+    function (err, req, res, next) {
+        if (req.xhr) { return res.json(err); }
         return res.redirect('/');
     }
 );
 
 router.get('/user/zipcode', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
+    function (req, res, next) {
         res.send(req.user.zipCode);
     })
 
 router.get('/user/routes', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
-        res.send(req.user.routes);
+    function (req, res, next) {
+        console.log(req.user);
+        DB.Route.find({ user: req.user._id })
+            .then(data => {
+                console.log(data);
+                res.send(data);
+            })
     })
 
-router.post('/user/routes', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
-        User.findOne({
-            username: req.user.username
-        }, function (err, user) {
-            
+router.post('/user/route', passport.authenticate('jwt', { session: false }),
+    function (req, res, next) {
+        const newRoute = new DB.Route({
+            start: {
+                lat: req.body.start.lat,
+                lon: req.body.start.lon,
+                name: req.body.start.name
+            },
+            end: {
+                lat: req.body.end.lat,
+                lon: req.body.end.lon,
+                name: req.body.end.name
+            },
+            waypoint: req.body.waypoint,
+            user: req.user._id,
+            directions: req.body.directions,
+            summary: {
+                distance: req.body.summary.distance,
+                duration: req.body.summary.duration
+            }
+        });
+        newRoute.save(function (err) {
+            if (err) {
+                console.log(err)
+                return res.json({ success: false })
+            }
+            res.json({ sucess: true })
         })
-    })
+    });
 
 //Router for User
-router.post('/bike', (req, res) => {
-    Bike.create({
-        bikeFrame: req.body.bikeFrame,
-        bikeType: req.body.bikeType,
-    }).then((dbPost) => res.json(dbPost));
-});
+router.post('/user/bike', passport.authenticate('jwt', { session: false }),
+    function (req, res, next) {
+        DB.Bike.create({
+            bikeFrame: req.body.bikeFrame,
+            bikeType: req.body.bikeType,
+            tireWidth: req.body.tireWidth,
+            owner: req.user.id
+        }).then((dbPost) => res.json(dbPost));
+    });
 
-// Router for the bikeroutes
-router.post('/routes', (req, res) => {
-    route.create({
-        // start lat and lon
-        // finish lat and lon
-        // optional waypoint
-    }).then((dbPost) => res.json(dbPost));
-});
-
-
-
-
+router.delete('/routes/:id', passport.authenticate('jwt', { session: false }),
+    function (req, res, next) {
+        const objId = mongoose.Types.ObjectId(req.params.id);
+        console.log(req);
+        DB.Route.deleteOne({ _id: objId })
+            .then(dbRes => res.json(dbRes))
+            .catch(err => res.status(422).json(err));
+    })
 
 
 

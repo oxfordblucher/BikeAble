@@ -13,7 +13,7 @@ class Contextual extends Component {
 
     render() {
         let found = this.context.found;
-        const renderOptions = () => {
+        const renderRefuge = () => {
             if(found){
                 return <Refuge/>
             }else{
@@ -21,7 +21,7 @@ class Contextual extends Component {
             }
         }
         return (
-            <Tab.Container defaultActiveKey='first'>
+            <Tab.Container defaultActiveKey='first' transition={false}>
                 <Row>
                     <Col>
                         <Nav>
@@ -44,9 +44,9 @@ class Contextual extends Component {
                                 <Gear />
                             </Tab.Pane>
                             <Tab.Pane eventKey='second'>
-                                {renderOptions()}
+                                {renderRefuge()}
                             </Tab.Pane>
-                            <Tab.Pane>
+                            <Tab.Pane eventKey='third' mountOnEnter={true}>
                                 <Saved />
                             </Tab.Pane>
                         </Tab.Content>

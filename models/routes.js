@@ -4,20 +4,34 @@ var Schema = mongoose.Schema;
 
 var routeSchema = new Schema({
     start: {
-        lat: { type: Object },
-        lon: { type: Object },
+        lat: { type: Number },
+        lon: { type: Number },
         name: { type: String }
     },
-    finish: {
-        lat: { type: Object },
-        lon: { type: Object },
+    end: {
+        lat: { type: Number },
+        lon: { type: Number },
         name: { type: String }
     },
 
     waypoint: {
-        type: Array,
-        required: true
+        lat: { type: Number },
+        lon: { type: Number }
     },
+
+    summary: {
+        distance: { type: Number },
+        duration: { type: String }
+    },
+
+    directions: {
+        type: Array
+    },
+
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
+    }
 
 });
 

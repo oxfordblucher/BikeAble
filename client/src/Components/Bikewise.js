@@ -26,7 +26,7 @@ class Bikewise extends Component {
             axios.get('https://bikewise.org/api/v2/incidents', {
                 'params': {
                     'occurred_after': this.state.recent,
-                    'proximity': res.data.zipCode,
+                    'proximity': res.data,
                     'proximity_square': 20
                 }
             })

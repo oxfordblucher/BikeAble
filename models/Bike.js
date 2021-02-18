@@ -1,27 +1,25 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var bcrypt = require('bcrypt-nodejs');
 
 
 var BikeSchema = new Schema({
     bikeFrame: {
-        type: String,
-        required: true
+        type: String
     },
     bikeType: {
         type: String,
-        required: true
+        enum: ['hybrid', 'mountain', 'cyclocross', 'gravel', 'road']
     },
     tireWidth: {
-        type: String,
-        required: true
+        type: String
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 });
 
-
-
-
-  module.exports = mongoose.model('Bike', BikeSchema);
+module.exports = mongoose.model('Bike', BikeSchema);
 
 
 
