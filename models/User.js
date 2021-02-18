@@ -21,7 +21,20 @@ var UserSchema = new Schema({
     zipCode: {
         type: String,
         required: true
-    }
+    },
+    bike: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Bike"
+        }
+    ],
+    routes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Route"
+        }
+    ]
+
 });
 
 UserSchema.pre('save', function (next) {
