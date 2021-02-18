@@ -29,12 +29,4 @@ router.post('/bike', function (req, res) {
 
 });
 
-
-
-
-
-
-
-
-
-
+module.exports = router;
