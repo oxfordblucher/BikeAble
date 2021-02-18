@@ -8,7 +8,7 @@ var routeSchema = new Schema({
         lon: { type: Number },
         name: { type: String }
     },
-    finish: {
+    end: {
         lat: { type: Number },
         lon: { type: Number },
         name: { type: String }
@@ -16,11 +16,16 @@ var routeSchema = new Schema({
     waypoint: {
         lat: { type: Number },
         lon: { type: Number }
+
     },
 
     summary: {
         distance: { type: Number },
         duration: { type: String }
+    },
+
+    directions: {
+        type: Array
     },
 
     user: {

@@ -31,12 +31,14 @@ class Dashboard extends Component {
         })
     }
 
-    setSummary = (dist, dura) => {
+    setSummary = (dist, dura, directions) => {
+
         this.setState({
             summary: {
                 distance: dist,
                 duration: dura
-            }
+            },
+            directions: directions
         })
     }
 

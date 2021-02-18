@@ -51,9 +51,9 @@ router.post('/login',
                         }
                         // if user is found and password is right create a token
                         var token = jwt.sign(userInfo, settings.secret,
-                        { expiresIn: '3h' });
+                            { expiresIn: '3h' });
                         // return the information including token as JSON
-                        res.cookie('bikeAble', token, {httpOnly: true});
+                        res.cookie('bikeAble', token, { httpOnly: true });
                         res.json({ success: true, token: token });
                     } else {
                         console.log('Authentication failed backend');
@@ -64,31 +64,34 @@ router.post('/login',
         });
     });
 
-router.get('/user', passport.authenticate('jwt', {failWithError: true, session: false}),
-    function(req, res, next) {
-        if (req.xhr) {res.json({name: req.user.firstName, zipCode: req.user.zipCode})};
+router.get('/user', passport.authenticate('jwt', { failWithError: true, session: false }),
+    function (req, res, next) {
+        if (req.xhr) { res.json({ name: req.user.firstName, zipCode: req.user.zipCode }) };
     },
-    function(err, req, res, next) {
-        if (req.xhr) {return res.json(err);}
+    function (err, req, res, next) {
+        if (req.xhr) { return res.json(err); }
         return res.redirect('/');
     }
 );
 
 router.get('/user/zipcode', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
+    function (req, res, next) {
         res.send(req.user.zipCode);
     })
 
 router.get('/user/routes', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
-        DB.Route.find({user: req.user.id})
+    function (req, res, next) {
+        console.log(req.user);
+        DB.Route.find({ user: req.user._id })
             .then(data => {
-                res.json(data);
+                console.log(data);
+                res.send(data);
             })
     })
 
 router.post('/user/route', passport.authenticate('jwt', { session: false }),
-    function(req, res, next) {
+
+    function (req, res, next) {
         const newRoute = new DB.Route({
             start: {
                 lat: req.body.start.lat,
@@ -101,26 +104,43 @@ router.post('/user/route', passport.authenticate('jwt', { session: false }),
                 name: req.body.end.name
             },
             waypoint: req.body.waypoint,
-            user: req.user._id
+            user: req.user._id,
+            directions: req.body.directions,
+            summary: {
+                distance: req.body.summary.distance,
+                duration: req.body.summary.duration
+            }
         });
         newRoute.save(function (err) {
             if (err) {
                 console.log(err)
                 return res.json({ success: false })
             }
-            res.json({sucess: true})
+
+            res.json({ sucess: true })
         })
     });
 
 //Router for User
-router.post('/user/bike', (req, res) => {
-    DB.Bike.create({
-        bikeFrame: req.body.bikeFrame,
-        bikeType: req.body.bikeType,
-        tireWidth: req.body.tireWidth,
-        owner: req.user.id
-    }).then((dbPost) => res.json(dbPost));
-});
+
+router.post('/user/bike', passport.authenticate('jwt', { session: false }),
+    function (req, res, next) {
+        DB.Bike.create({
+            bikeFrame: req.body.bikeFrame,
+            bikeType: req.body.bikeType,
+            tireWidth: req.body.tireWidth,
+            owner: req.user.id
+        }).then((dbPost) => res.json(dbPost));
+    });
+
+router.delete('/routes/:id', passport.authenticate('jwt', { session: false }),
+    function (req, res, next) {
+        const objId = mongoose.Types.ObjectId(req.params.id);
+        console.log(req);
+        DB.Route.deleteOne({ _id: objId })
+            .then(dbRes => res.json(dbRes))
+            .catch(err => res.status(422).json(err));
+    })
 
 
 
