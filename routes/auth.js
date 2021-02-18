@@ -63,11 +63,19 @@ router.post('/login',
 //Router for User
 router.post('/bike', (req, res) => {
     Bike.create({
-      bikeFrame: req.body.bikeFrame,
-      bikeType: req.body.bikeType,
+        bikeFrame: req.body.bikeFrame,
+        bikeType: req.body.bikeType,
     }).then((dbPost) => res.json(dbPost));
-  });
+});
 
+// Router for the bikeroutes
+router.post('/routes', (req, res) => {
+    route.create({
+        // start lat and lon
+        // finish lat and lon
+        // optional waypoint
+    }).then((dbPost) => res.json(dbPost));
+});
 
 
 

@@ -21,7 +21,7 @@ var UserSchema = new Schema({
     zipCode: {
         type: String,
         required: true
-    }
+    },
 });
 
 UserSchema.pre('save', function (next) {

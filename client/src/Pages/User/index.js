@@ -14,22 +14,19 @@ const User = (props) => {
         API.Equipment(bikeFrame, bikeType,).then(res => {
             alert(JSON.stringify(res))
         })
-        
+
     }
-
-    
-
 
 
 
     return (
         <div className="Equipment">
-            
+
             <Form onSubmit={handleSubmit}>
                 <Form.Group size="lg" className="bikeFrame" controlId="bikeFrame">
                     <Form.Label>Bike Frame</Form.Label>
                     <Form.Control
-                        
+
                         type="bikeFrame"
                         value={bikeFrame}
                         onChange={(e) => setFrame(e.target.value)}
@@ -46,8 +43,8 @@ const User = (props) => {
                 <Button block size="lg" className="submitButton" type="submit">
                     Submit
         </Button>
-                
-        
+
+
             </Form>
         </div>
     );
