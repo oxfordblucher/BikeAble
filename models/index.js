@@ -1,3 +1,5 @@
 module.exports = {
-  Bike: require("./Bike")
+  Bike: require("./Bike"),
+  User: require("./User"),
+  Route: require("./routes")
 };
