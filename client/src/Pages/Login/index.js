@@ -32,7 +32,7 @@ const Login = (props) => {
             <div className="cycle">
                 <img src={process.env.PUBLIC_URL + '/opener127.png'} alt='handlebars' className="cycle" />
             </div>
-            <h1>Welcome to BikeAble!</h1>
+            
             <h3>Activate your wanderlust!</h3>
             {show &&
                 <Alert variant="info" onClose={() => setShow(false)} dismissible>
