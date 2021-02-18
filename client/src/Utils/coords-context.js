@@ -4,8 +4,10 @@ const CoordsContext = createContext({
     coords1: {},
     coords2: {},
     waypoint: {},
+    zipCode: NaN,
     found: false,
-    setCoords: () => {}
+    setCoords: () => {},
+    setWaypoint: () => {}
 });
 
 export default CoordsContext;

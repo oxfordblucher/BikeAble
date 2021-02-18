@@ -6,13 +6,16 @@ import Panel from './Panel';
 class Map extends Component {
   // Create a reference to the HTML element we want to put the map on
   mapRef = React.createRef();
-  panelRef = React.createRef();
 
-  state = {
-    map: null,
-    label: '',
-    directions: [],
-    summary: {}
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      map: null,
+      label: '',
+      directions: [],
+      summary: {}
+    }
   }
 
   componentDidMount = () => {
@@ -124,6 +127,7 @@ class Map extends Component {
 
   componentWillUnmount = () => {
     this.state.map.dispose();
+    this._isMounted = false;
   }
 
   render() {

@@ -4,13 +4,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import CoordsContext from '../Utils/coords-context';
-/* import Gear from '../Components/Gear.js';
-import RouteOptions from '../Components/RouteOptions.js'; */
+import Gear from '../Components/Gear.js';
+import Refuge from './Refuge.js';
+import Saved from '../Components/Saved.js';
 
 class Contextual extends Component {
     static contextType = CoordsContext;
 
     render() {
+        let found = this.context.found;
+        const renderOptions = () => {
+            if(found){
+                return <Refuge/>
+            }else{
+                return null;
+            }
+        }
         return (
             <Tab.Container defaultActiveKey='first'>
                 <Row>
@@ -20,7 +29,10 @@ class Contextual extends Component {
                                 <Nav.Link eventKey='first'>My Gear</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey='second'>Map Options</Nav.Link>
+                                <Nav.Link eventKey='second'>Restrooms</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey='third'>Save(d) Routes</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </Col>
@@ -29,25 +41,13 @@ class Contextual extends Component {
                     <Col>
                         <Tab.Content>
                             <Tab.Pane eventKey='first'>
-                                {/* <Gear /> */}
-                                <div>
-                                    <p>
-                                        Model: <br/>
-                                        Frame: <br/>
-                                        Crankset: <br/>
-                                        Derailleur: <br/>
-                                    </p>
-                                </div>
+                                <Gear />
                             </Tab.Pane>
                             <Tab.Pane eventKey='second'>
-                                {/* <RouteOptions /> */}
-                                <div>
-                                    {/* <Refuge /> */}
-                                    <p>
-                                        Refuge Restrooms API
-                                        {this.context.coords1.lat}
-                                    </p>
-                                </div>
+                                {renderOptions()}
+                            </Tab.Pane>
+                            <Tab.Pane>
+                                <Saved />
                             </Tab.Pane>
                         </Tab.Content>
                     </Col>

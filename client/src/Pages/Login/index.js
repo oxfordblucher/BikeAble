@@ -17,7 +17,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         API.loginUser(email, password).then(res => {
-            console.log(res.data)
+            
             // This is whre I redirect
             if (res.data.success) {
                 history.push('/dashboard')
@@ -26,36 +26,14 @@ const Login = (props) => {
         }).catch(error => setShow(true))
     }
 
-    // state = {
-    //     redirectToReferrer: false
-    // }
-    // login = () => {
-    //     fakeAuth.authenticate(() => {
-    //         this.setState(() => ({
-    //             redirectToReferrer: true
-    //         }))
-    //     })
-    // }
-    // render() {
-    //     const { redirectToReferrer } = this.state
-
-    //     if (redirectToReferrer === true) {
-    //         return <Redirect to='/' />
-    //     }
-
-    //     // const redirectToReferrer = this.state.redirectToReferrer;
-    //     // if (redirectToReferrer === true) {
-    //     //     return <Redirect to="/dashboard" />
-    //     // }
-
 
     return (
         <div className="Login">
             <div className="cycle">
-                <img src={process.env.PUBLIC_URL + '/opener127.jpg'} className="cycle" />
+                <img src={process.env.PUBLIC_URL + '/opener127.jpg'} alt='handlebars' className="cycle" />
             </div>
-            <h1>Welcome to Bikeable!</h1>
-            <h3>Discover your route!</h3>
+            <h1>Welcome to BikeAble!</h1>
+            <h3>Activate your wanderlust!</h3>
             {show &&
                 <Alert variant="info" onClose={() => setShow(false)} dismissible>
                     <p>
@@ -83,7 +61,7 @@ const Login = (props) => {
                     </Form.Group>
                     <Button block size="lg" className="loginButton" type="submit">
                         Login
-        </Button>
+                    </Button>
                     <p>
                         Not a member?{" "}
                         <Link to="/register" className="signUp">
@@ -91,8 +69,8 @@ const Login = (props) => {
                                 className="glyphicon glyphicon-plus-sign"
                                 aria-hidden="true"
                             ></span>{" "}
-            Register here
-          </Link>
+                            Register here
+                        </Link>
                     </p>
                 </Form>
             </Container>
