@@ -17,7 +17,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         API.loginUser(email, password).then(res => {
-            
+
             // This is whre I redirect
             if (res.data.success) {
                 history.push('/dashboard')
@@ -30,7 +30,7 @@ const Login = (props) => {
     return (
         <div className="Login">
             <div className="cycle">
-                <img src={process.env.PUBLIC_URL + '/opener127.jpg'} alt='handlebars' className="cycle" />
+                <img src={process.env.PUBLIC_URL + '/opener127.png'} alt='handlebars' className="cycle" />
             </div>
             <h1>Welcome to BikeAble!</h1>
             <h3>Activate your wanderlust!</h3>

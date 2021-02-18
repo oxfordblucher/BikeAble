@@ -32,6 +32,7 @@ class Dashboard extends Component {
     }
 
     setSummary = (dist, dura, directions) => {
+
         this.setState({
             summary: {
                 distance: dist,

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import CoordsContext from '../Utils/coords-context';
+
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 class Panel extends Component {
-
     static contextType = CoordsContext;
 
     componentDidMount = () => {

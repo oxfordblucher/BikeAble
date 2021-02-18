@@ -16,7 +16,6 @@ class Saved extends Component {
     componentDidMount = () => {
         axios.get('/auth/user/routes')
             .then(res => {
-                console.log(res.data);
                 this.setState({
                     routes: res.data
                 })
@@ -33,7 +32,8 @@ class Saved extends Component {
             })
     }
 
-    render() {
+    saveRoute = (event) => {
+        event.preventDefault();
 
         const routeList = this.state.routes.map((route, i) => {
             return (

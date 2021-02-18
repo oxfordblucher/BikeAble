@@ -90,6 +90,7 @@ router.get('/user/routes', passport.authenticate('jwt', { session: false }),
     })
 
 router.post('/user/route', passport.authenticate('jwt', { session: false }),
+
     function (req, res, next) {
         const newRoute = new DB.Route({
             start: {
@@ -115,11 +116,13 @@ router.post('/user/route', passport.authenticate('jwt', { session: false }),
                 console.log(err)
                 return res.json({ success: false })
             }
+
             res.json({ sucess: true })
         })
     });
 
 //Router for User
+
 router.post('/user/bike', passport.authenticate('jwt', { session: false }),
     function (req, res, next) {
         DB.Bike.create({
