@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
+import CoordsContext from '../Utils/coords-context';
 
 class Panel extends Component {
+    constructor() {
+        super();
+    }
+
+    static contextType = CoordsContext;
+
+    componentDidMount = () => {
+        this.context.setSummary(this.props.summary.distance, this.props.summary.duration)
+    }
+
     render() {
         const directions = this.props.directions.map((direction, i) => {
             let length = parseInt(direction.length * 3.28084),

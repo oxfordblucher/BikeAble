@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
 var UserSchema = new Schema({
-
     firstName: {
         type: String,
         unique: true,
@@ -65,5 +64,9 @@ UserSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch);
     });
 };
+
+UserSchema.methods.getAllRoutes = function (req, res) {
+    return Routes.find({ user: req.user.id });
+}
 
 module.exports = mongoose.model('User', UserSchema);

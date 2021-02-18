@@ -68,7 +68,7 @@ class LocationForm extends Component {
 
         this.setState({ 'found': true });
 
-        this.context.setCoords(this.state.coords1, this.state.coords2);
+        this.context.setCoords(this.state.coords1, this.state.coords2, this.state.start, this.state.end);
     }
 
     render() {
