@@ -34,11 +34,11 @@ const User = (props) => {
 
     return (
         <div className="Equipment">
-
-            <Form onSubmit={handleSubmit}>
-                <Form.Group size="lg" className="bikeFrame" controlId="bikeFrame">
-                    <Form.Label>Bike Frame</Form.Label>
-                    <Form.Control
+            
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group size="lg" className="bikeFrame" controlId="bikeFrame">
+                        <Form.Label>Bike Frame</Form.Label>
+                        <Form.Control
 
                         type="bikeFrame"
                         value={bikeFrame}
@@ -85,8 +85,9 @@ const User = (props) => {
 
 
 
-            </Form>
-        </div >
+                </Form>
+            
+        </div>
     );
 
 }

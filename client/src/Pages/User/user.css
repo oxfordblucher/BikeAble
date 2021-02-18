@@ -1,0 +1,43 @@
+@media all and (min-width: 480px) { 
+    .Equipment {
+    padding: 5px 0;
+    background-color: blue;
+      
+  }
+  .Equipment form {
+    margin: 0 auto;
+    max-width: 320px;
+    text-align: center;
+    background-color: rgb(180, 238, 230);
+  }
+
+  .h1 {
+    color: #ED671C;
+  }
+  
+  .bikeFrame {
+    padding-bottom: 1%;
+    text-align: center;
+  }
+  .bikeType {
+      padding-bottom: 1%;
+      text-align: center;
+  }
+  
+  .tireWidth {
+    padding-bottom: 1%;
+    text-align: center;
+}
+.Equipment {
+  background-image: url("https://d1wa5qhtul915h.cloudfront.net/app/uploads/2020/04/Bike-Europe-Frame-core-of-the-bicycle-industry-1024x682.jpg");
+  
+  
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+ }
+  
+  .User {border-color:#111111 ;}
+}
