@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../models/user');
-const Bike = require('../models/Bike');
+const User = require('../../models/User');
+const Bike = require('../../models/Bike');
 
 
 router.get('/', function (req, res, next) {
@@ -13,23 +13,28 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.post('/', function (req, res) {
+    User.find(req.body, (err, data) => {
+        if (err) return next(err);
+        res.json(data);
+    })
 
-
-router.post('/bike', function (req, res) {
-    console.log(  'bike: ', req.body);
-    const data = req.body;
-Bike.create (req.body).then (newBike => res.json(newBike))
-    
 });
 
 
-      
+router.post('/bike', function (req, res) {
+    console.log('bike: ', req.body);
+    const data = req.body;
+    Bike.create(req.body).then(newBike => res.json(newBike))
+
+});
 
 
 
 
 
-    
 
-    module.exports = router;
+
+
+
 

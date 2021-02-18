@@ -1,30 +1,46 @@
-import React, { Component } from 'react';
-import axios from 'axios';
 import Table from 'react-bootstrap/Table';
+import Form from "react-bootstrap/Form";
+import './Discover.css';
+import Button from 'react-bootstrap/Button';
+import Container from "react-bootstrap/Container";
+import React, { useState } from "react";
+import { API } from "../../Utils/userAPI";
+import { UsersList, UserListItem } from "./nearList"
 
-class Discover extends Component {
-    state = {
-        userList: []
-    };
+function Users() {
 
-    componentDidMount() {
-        axios.get('/api/users')
-            .then(data => {
-                console.log(data);
-            })
+    const [zipCode, setZipCodeSearch] = useState([]);
+    const [users, setUsers] = useState([])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        API.getZipUsers(zipCode).then(res => {
+            console.log(res.data)
+            setUsers(res.data)
+            setZipCodeSearch("")
+
+        }).catch(error => console.log(error))
     }
 
-    render() {
-        return (
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Users</th>
-                    </tr>
-                </thead>
-            </Table>
-        )
-    }
-};
+    return (
+        <Table>
+            <h1>Users in Your Area!</h1>
+            <Container>
+                <Form>
+                    <Form.Control onChange={(e) => setZipCodeSearch(e.target.value)} type="text" className="zipCode" placeholder="Enter your Zip Code" />
+                    <Button
+                        onClick={handleSubmit}
+                        block size="lg" className="zipButton">
+                        Find Cyclers
+            </Button>
+                </Form>
+                {users.length ? users.map((user, index) => <div><ul>
+                    <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
+            </Container>
 
-export default Discover;
+        </Table>
+    );
+}
+
+
+export default Users;

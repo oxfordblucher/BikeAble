@@ -34,9 +34,7 @@ const User = (props) => {
   
           
 
-    
 
-        
 
 
     return (
