@@ -31,7 +31,9 @@ class Refuge extends Component {
     }
 
     setWaypoint = (lat, lng) => {
+        this.context.unmountMap();
         this.context.setWaypoint(lat, lng);
+        this.context.mountMap();
     }
 
     render() {

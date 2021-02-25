@@ -21,7 +21,6 @@ class Bikewise extends Component {
 
     componentDidMount = () => {
         axios.get(`/auth/user/zipcode`).then(res => {
-            console.log(res.data);
                     
             axios.get('https://bikewise.org/api/v2/incidents', {
                 'params': {
@@ -68,12 +67,13 @@ class Bikewise extends Component {
             let formattedtime = `${months[time.getMonth()]} ${time.getDate()} ${time.getFullYear()}`
 
             return (
-                <Card key={i}>
+                <Card key={i} className={`${incident.type} col-xs-12 col-sm-6 col-md-4 col-lg-3`}>
                     <Card.Header> {incident.type} </Card.Header>
-                    <CardImg src={incident.media.image_url_thumb} />
+                    <CardImg src={incident.media.image_url_thumb || 'https://via.placeholder.com/300'} />
                     <Card.Body>
                         <Card.Title> {incident.title} </Card.Title>
                         <Card.Subtitle> At: {incident.address} On: {formattedtime}</Card.Subtitle>
+                        <br />
                         <Card.Text>
                             {incident.description}
                         </Card.Text>
@@ -90,7 +90,9 @@ class Bikewise extends Component {
                     <Dropdown.Item onClick={() => this.filter('month')}>Month</Dropdown.Item>
                     <Dropdown.Item onClick={() => this.filter('year')}>Year</Dropdown.Item>
                 </DropdownButton>
-                {incidentList}
+                <div className='d-flex align-content-stretch flex-wrap'>
+                    {incidentList}
+                </div>
             </div>
         )
     }

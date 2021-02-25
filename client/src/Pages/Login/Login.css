@@ -1,4 +1,4 @@
-@media all and (min-width: 480px) {
+
     .Login {
       font-family: 'DM Serif Display', serif;
       padding: 5px 0;
@@ -21,12 +21,6 @@ text-align: center;
         align-items: center;
         text-align: center;
            }
-  }
-
-  h1 {
-      text-align: center;
-      font-family: 'DM Serif Display', serif;
-  }
 
   h3 {
     padding: 1%;
@@ -49,11 +43,16 @@ text-align: center;
   
 }
 
+.cycle-container {
+  margin: auto;
+  background-color: initial;
+  padding: initial;
+  border: initial;
+}
+
 .cycle {
-  align-items: center;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+  height: 235px;
+  display: block;
 }
 
 .form {
@@ -68,18 +67,10 @@ text-align: center;
 }
   
 .Login {
-background-color: white;
+  background-color: white;
 }
-
-
 
 img {
-
-  
   margin-left: auto;
   margin-right: auto;
-  
-
 }
-
-

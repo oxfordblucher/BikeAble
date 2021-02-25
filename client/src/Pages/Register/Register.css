@@ -1,0 +1,53 @@
+
+  
+  .Register{
+    padding: 1%;
+  }
+
+    .Register form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .formEntry {
+        padding-bottom: 2%;
+        text-align: center;
+    }
+
+
+  h1 {
+      padding: 5%;
+      padding-bottom: 1%;
+      text-align: center;
+      font-family: 'DM Serif Display', serif;
+      color: black;
+      font-weight: 900;
+  }
+  
+.container {
+  background-color: transparent;
+}
+
+p {
+  text-align: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: black;
+  line-height: 2;
+  font-weight: 600;
+}
+
+h5 {
+  text-align: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: yellow;
+}
+
+a:link {
+  color: yellow;
+}
+
+a:visited {
+  color: white;
+}

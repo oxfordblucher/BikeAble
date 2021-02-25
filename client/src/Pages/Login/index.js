@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container"
@@ -6,13 +6,15 @@ import { API } from "../../Utils/userAPI";
 import "./Login.css";
 import { useHistory, Link } from "react-router-dom";
 import Alert from 'react-bootstrap/Alert';
+import CoordsContext from '../../Utils/coords-context';
 
 
 const Login = (props) => {
     let history = useHistory();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
+    const context = useContext(CoordsContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,20 +22,19 @@ const Login = (props) => {
 
             // This is whre I redirect
             if (res.data.success) {
+                context.logIn(res.data.user)
                 history.push('/dashboard')
             }
 
         }).catch(error => setShow(true))
     }
 
-
     return (
-        <div className="Login">
-            <div className="cycle">
-                <img src={process.env.PUBLIC_URL + '/opener127.png'} alt='handlebars' className="cycle" />
+        <div className="Login" style={{backgroundImage: `url(${process.env.PUBLIC_URL + '/trailbike.jpg'})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: 'cover'}}>
+            <div className="cycle-container container">
+                <img src={process.env.PUBLIC_URL + '/opener127.png'} alt='logo' className="cycle" />
             </div>
-            
-            <h1>Activate your wanderlust!</h1>
+
             {show &&
                 <Alert variant="info" onClose={() => setShow(false)} dismissible>
                     <p>
