@@ -5,10 +5,14 @@ var bcrypt = require('bcrypt-nodejs');
 var UserSchema = new Schema({
     firstName: {
         type: String,
-        unique: true,
         required: true
     },
     username: {
+        type: String,
+        unique: true,
+        required: true
+    },
+    email: {
         type: String,
         unique: true,
         required: true
@@ -21,20 +25,27 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    bike: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Bike"
-        }
-    ],
-    routes: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Route"
-        }
-    ]
-
-});
+    image: {
+        type: String
+    },
+    bike: [{
+        type: Schema.Types.ObjectId,
+        ref: "Bike"
+    }],
+    routes: [{
+        type: Schema.Types.ObjectId,
+        ref: "Route"
+    }],
+    outgoing: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+    }],
+    incoming: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Message'
+    }]},
+    {timestamps: true}
+);
 
 UserSchema.pre('save', function (next) {
     var user = this;

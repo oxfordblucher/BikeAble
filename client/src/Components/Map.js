@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import bikeIcon from '../assets/riding-fill.png';
 import flagIcon from '../assets/flag.png';
 import Panel from './Panel';
+import CoordsContext from '../Utils/coords-context';
 
 class Map extends Component {
   // Create a reference to the HTML element we want to put the map on
@@ -19,7 +20,6 @@ class Map extends Component {
   }
 
   componentDidMount = () => {
-
     const H = window.H;
     const platform = new H.service.Platform({
       apikey: "HNUr88gYr5pMHAxGfu2rSzHK6R2okLg7Tymzq3dH-24"
@@ -32,7 +32,7 @@ class Map extends Component {
       this.mapRef.current,
       defaultLayers.vector.normal.map,
       {
-        center: { lat: parseFloat((this.props.lat1 + this.props.lat2) / 2), lng: parseFloat((this.props.lon1 + this.props.lon2) / 2) },
+        center: { lat: parseFloat((this.props.lat1 + this.props.lat2) / 2), lng: parseFloat((this.props.lng1 + this.props.lng2) / 2) },
         zoom: 10,
         pixelRatio: window.devicePixelRatio || 1
       }
@@ -97,7 +97,8 @@ class Map extends Component {
           summary: {
             distance: parseFloat(distance / 1609.34).toFixed(2),
             duration: `${Math.floor(duration / 60)} minutes ${(duration % 60)} seconds`
-          }
+          },
+          map
         });
 
         console.log(this.state.directions[0]);
@@ -111,10 +112,14 @@ class Map extends Component {
     const routingParams = {
       'routingMode': 'fast',
       'transportMode': 'bicycle',
-      'origin': `${this.props.lat1},${this.props.lon1}`,
-      'destination': `${this.props.lat2},${this.props.lon2}`,
+      'origin': `${this.props.lat1},${this.props.lng1}`,
+      'destination': `${this.props.lat2},${this.props.lng2}`,
       'return': 'polyline,turnByTurnActions,actions,instructions,travelSummary'
     };
+
+    if (this.props.wayLat && this.props.wayLng) {
+      routingParams.waypoint = `${this.props.wayLat},${this.props.wayLng}`
+    }
 
     const router = platform.getRoutingService(null, 8);
 
@@ -122,11 +127,9 @@ class Map extends Component {
       (error) => {
         alert(error.message);
       });
-
   }
 
   componentWillUnmount = () => {
-    this.state.map.dispose();
     this._isMounted = false;
   }
 

@@ -10,6 +10,7 @@
     "axios": "^0.21.1",
     "bcrypt-nodejs": "0.0.3",
     "bootstrap": "^4.6.0",
+    "cloudinary-react": "^1.6.8",
     "passport": "^0.4.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",

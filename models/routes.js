@@ -28,11 +28,17 @@ var routeSchema = new Schema({
         type: Array
     },
 
+    favorited: {
+        type: Boolean,
+        default: false
+    },
+
     user: {
         type: Schema.Types.ObjectId,
-        ref: "User"
-    }
-
-});
+        ref: "User",
+        required: true
+    }},
+    {timestamps: true}
+);
 
 module.exports = mongoose.model('Route', routeSchema);

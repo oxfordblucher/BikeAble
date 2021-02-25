@@ -3,19 +3,25 @@ var Schema = mongoose.Schema;
 
 
 var BikeSchema = new Schema({
-    bikeFrame: {
+    modelName: {
         type: String
     },
-    bikeType: {
-        type: String,
-        enum: ['hybrid', 'mountain', 'cyclocross', 'gravel', 'road']
+    frame: {
+        type: String
     },
-    tireWidth: {
+    type: {
+        type: String
+    },
+    gearset: {
         type: String
     },
     owner: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
+    },
+    image: {
+        type: String
     }
 });
 

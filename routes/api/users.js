@@ -1,32 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const User = require('../../models/User');
-const Bike = require('../../models/Bike');
+const DB = require('../../models');
+var passport = require('passport');
+require('../../config/passport')(passport);
 
 
-router.get('/', function (req, res, next) {
-    User.find((err, equipment) => {
-        if (err) return next(err);
-        res.json(users);
-    });
-
-});
-
-router.post('/', function (req, res) {
-    User.find(req.body, (err, data) => {
-        if (err) return next(err);
-        res.json(data);
+router.post('/users', passport.authenticate('jwt', {session: false}),
+    function(req, res, next) {
+        DB.User.find({
+            zipCode: req.body.zipCode
+        }).then(resp => {
+            res.json(resp.data)
+        })
     })
-
-});
-
 
 router.post('/bike', function (req, res) {
     console.log('bike: ', req.body);
     const data = req.body;
     Bike.create(req.body).then(newBike => res.json(newBike))
-
 });
 
 module.exports = router;

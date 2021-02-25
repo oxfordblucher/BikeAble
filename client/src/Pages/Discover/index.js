@@ -8,6 +8,7 @@ import { API } from "../../Utils/userAPI";
 import { UsersList, UserListItem } from "./nearList";
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import Navi from '../../Components/Nav';
 
 function Users() {
 
@@ -39,24 +40,26 @@ function Users() {
     }
 
     return (
-        <Table>
-            <h1>Users in Your Area!</h1>
-            <Container>
-                <Form>
-                <Form.Control onChange={(e) => setZipCodeSearch(e.target.value)} type="text" className="zipCode" placeholder="Enter your Zip Code" />
-                    <Button
-                        onClick={handleSubmit}
-                        block size="lg" className="zipButton">
-                        Find Cyclers
-            </Button>
-                </Form>
-                {users.length ? users.map((user, index) => <div><ul>
-                    <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
-                    
-            </Container>
-           
-        </Table>
-        
+        <React.Fragment>
+            <Navi />
+            <Table>
+                <h1>Users in Your Area!</h1>
+                <Container>
+                    <Form>
+                        <Form.Control onChange={(e) => setZipCodeSearch(e.target.value)} type="text" className="zipCode" placeholder="Enter your Zip Code" />
+                        <Button
+                            onClick={handleSubmit}
+                            block size="lg" className="zipButton">
+                            Find Cyclers
+                        </Button>
+                    </Form>
+                    {users.length ? users.map((user, index) => <div><ul>
+                        <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
+
+                </Container>
+
+            </Table>
+        </React.Fragment>
     );
 }
 

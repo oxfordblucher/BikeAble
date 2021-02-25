@@ -8,10 +8,16 @@ const CoordsContext = createContext({
     waypoint: {},
     zipCode: NaN,
     found: false,
+    user: false,
     summary: {},
+    directions: [],
+    logIn: () => {},
+    logOut: () => {},
     setCoords: () => {},
     setWaypoint: () => {},
-    setSummary: () => {}
+    setSummary: () => {},
+    unmountMap: () => {},
+    mountMap: () => {}
 });
 
 export default CoordsContext;
