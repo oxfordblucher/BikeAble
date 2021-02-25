@@ -55,9 +55,9 @@ class Dashboard extends Component {
                                 <Nav.Item>
                                     <Nav.Link eventKey='second'>Saved Routes</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link eventKey='third'>Messages</Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                                 <Nav.Item>
                                     <Nav.Link eventKey='fourth'>Incidents Near Me</Nav.Link>
                                 </Nav.Item>
@@ -74,9 +74,9 @@ class Dashboard extends Component {
                                 <Nav.Item>
                                     <Nav.Link eventKey='second'>Saved Routes</Nav.Link>
                                 </Nav.Item>
-                                <Nav.Item>
+                                {/* <Nav.Item>
                                     <Nav.Link eventKey='third'>Messages</Nav.Link>
-                                </Nav.Item>
+                                </Nav.Item> */}
                                 <Nav.Item>
                                     <Nav.Link eventKey='fourth'>Incidents Near Me</Nav.Link>
                                 </Nav.Item>
@@ -93,9 +93,9 @@ class Dashboard extends Component {
                                 <Tab.Pane eventKey='second' mountOnEnter='true' unmountOnExit='true'>
                                     <Saved />
                                 </Tab.Pane>
-                                <Tab.Pane eventKey='third' mountOnEnter='true' unmountOnExit='true'>
+                                {/* <Tab.Pane eventKey='third' mountOnEnter='true' unmountOnExit='true'>
                                     <Messages />
-                                </Tab.Pane>
+                                </Tab.Pane> */}
                                 <Tab.Pane eventKey='fourth' mountOnEnter='true' unmountOnExit='true'>
                                     <Bikewise />
                                 </Tab.Pane>
