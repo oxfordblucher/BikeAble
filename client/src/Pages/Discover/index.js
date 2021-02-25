@@ -12,14 +12,13 @@ import Navi from '../../Components/Nav';
 
 function Users() {
 
-    const [zipCode, setZipCodeSearch] = useState([]);
+    const [zipCode, setZipCodeSearch] = useState("");
     const [users, setUsers] = useState([])
     const [redirect, setRedirect] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault();
         API.getZipUsers(zipCode).then(res => {
-            console.log(res.data)
             setUsers(res.data)
             setZipCodeSearch("")
 
@@ -53,8 +52,14 @@ function Users() {
                             Find Cyclers
                         </Button>
                     </Form>
-                    {users.length ? users.map((user, index) => <div><ul>
-                        <li>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} </li></ul></div>) : "No users found"}
+                    <div>
+                        <ul>
+
+                        </ul>
+                    </div>
+                    {users.length ? users.map((user, index) => 
+                        <li className='nearListItem' key={user._id}>{`First Name: ${user.firstName},`} {` username: ${user.username},`}{` ZipCode: ${user.zipCode},`} <a href={`/user/${user._id}`}>Profile</a></li>) 
+                        : "No users found"}
 
                 </Container>
 

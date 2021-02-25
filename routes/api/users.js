@@ -10,15 +10,20 @@ router.post('/users', passport.authenticate('jwt', {session: false}),
     function(req, res, next) {
         DB.User.find({
             zipCode: req.body.zipCode
-        }).then(resp => {
-            res.json(resp.data)
+        }).then((resp) => {
+            res.json(resp)
+        }).catch(err => {
+            console.log(err);
         })
     })
 
-router.post('/bike', function (req, res) {
-    console.log('bike: ', req.body);
-    const data = req.body;
-    Bike.create(req.body).then(newBike => res.json(newBike))
+router.post('/profiles', passport.authenticate('jwt', {session:false}), 
+    function (req, res, next) {
+        console.log(req.body.userId);
+        DB.User.findById(mongoose.Types.ObjectId(req.body.userId))
+            .then(resp => {
+                res.json(resp);
+            })
 });
 
 module.exports = router;

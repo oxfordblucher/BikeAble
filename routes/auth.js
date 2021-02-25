@@ -91,7 +91,6 @@ router.get('/user/routes', passport.authenticate('jwt', { session: false }),
         const objId = mongoose.Types.ObjectId(req.user._id);
         DB.Route.find({ user: objId })
             .then(data => {
-                console.log(data);
                 res.json(data);
             })
     })
@@ -99,7 +98,7 @@ router.get('/user/routes', passport.authenticate('jwt', { session: false }),
 router.post('/user/route', passport.authenticate('jwt', { session: false }),
 
     function (req, res, next) {
-        const newRoute = new DB.Route({
+        DB.Route.create({
             start: {
                 lat: req.body.start.lat,
                 lon: req.body.start.lon,
@@ -117,14 +116,20 @@ router.post('/user/route', passport.authenticate('jwt', { session: false }),
                 distance: req.body.summary.distance,
                 duration: req.body.summary.duration
             }
-        });
-        newRoute.save(function (err) {
-            if (err) {
-                console.log(err)
-                return res.json({ success: false })
-            }
-
-            res.json({ sucess: true })
+        }).then(newRt => {
+            DB.User.findByIdAndUpdate(
+                req.user._id,
+                {
+                    $push: {
+                        routes: {
+                            _id: newRt._id
+                        }
+                    }
+                },
+                {new: true, useFindAndModify: false}
+            )
+        }).then(resp => {
+            res.json({success: true})
         })
     });
 
@@ -138,7 +143,21 @@ router.post('/user/bike', passport.authenticate('jwt', { session: false }),
             type: req.body.type,
             gearset: req.body.gearset,
             owner: req.user._id
-        }).then((dbPost) => res.json(dbPost));
+        }).then(newBike => {
+            DB.User.findByIdAndUpdate(
+                req.user._id
+            ),
+            {
+                $push: {
+                    bike: {
+                        _id: newBike._id
+                    }
+                }
+            },
+            {new: true, useFindAndModify: false}
+        }).then(resp => {
+            res.json({success: true})
+        })
     });
 
 router.delete('/routes/:id', passport.authenticate('jwt', { session: false }),
@@ -146,8 +165,19 @@ router.delete('/routes/:id', passport.authenticate('jwt', { session: false }),
         const objId = mongoose.Types.ObjectId(req.params.id);
         console.log(req);
         DB.Route.deleteOne({ _id: objId })
-            .then(dbRes => res.json(dbRes))
-            .catch(err => res.status(422).json(err));
+            .then(dbRes => {
+                DB.User.findByIdAndUpdate(
+                    mongoose.Types.ObjectId(req.user._id)
+                ),
+                {
+                    $pull: {
+                        _id: objId
+                    }
+                },
+                {new: true, useFindAndModify: false}
+        }).then(resp => {
+            res.json({success: true})
+        })
     })
 
 router.get('/messages', passport.authenticate('jwt', { session: false }),
@@ -162,6 +192,7 @@ router.get('/messages', passport.authenticate('jwt', { session: false }),
 router.get('/gear', passport.authenticate('jwt', { session: false }),
     function (req, res, next) {
         const objId = mongoose.Types.ObjectId(req.user._id);
+        console.log(objId);
         DB.Bike.find({ owner: objId })
             .then(data => {
                 res.json(data)
