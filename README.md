@@ -22,7 +22,7 @@ https://bike-able.herokuapp.com/
 ## Link to the Demo Video of Application
 https://drive.google.com/file/d/1FBG8NUwI65UehOKl2A_8GHE65dWI7n5Q/view?usp=sharing
 ## Description
- ![](public/Screen Shot 2021-02-18 at 1.07.22 PM.png)
+ ![Screenshot](./client/src/assets/screenshot.png?raw=true)
 BikeAble is a full stack application, utilizing the MVC structure to design an application for Cycling enthusiasts. BikeAble allows users to search and save Bike routes, so it is easy to see where they have cycled and which routes they liked. 
  
 ## Installation 

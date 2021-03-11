@@ -27,5 +27,8 @@ export const API = {
     },
     getUserData: (userId) => {
         return axios.post('/api/users/profiles', { userId: userId})
+    },
+    sendMessage: (id) => {
+        return axios.
     }
 };
